@@ -47,8 +47,8 @@ const CONTACT_DETAILS = [
   },
   {
     title: "Studio Hours",
-    value: "Monday – Friday: 9:00 AM – 6:00 PM",
-    sub: "Saturday: 10:00 AM – 4:00 PM (Sunday Closed)",
+    value: "Monday to Friday: 9:00 AM to 6:00 PM",
+    sub: "Saturday: 10:00 AM to 4:00 PM (Sunday Closed)",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
         <circle cx="12" cy="12" r="10" />

@@ -51,7 +51,7 @@ export const OriginStorySection: React.FC = () => {
             {/* Author Attribution */}
             <div className="pt-2">
               <p className="font-serif font-semibold text-[16px] text-[#1C1C1C]">
-                — Dr. Elena Vance, MD
+                Dr. Elena Vance, MD
               </p>
               <p className="font-sans text-[13px] text-[#64748b] mt-0.5">
                 Founder & Lead Medical Director

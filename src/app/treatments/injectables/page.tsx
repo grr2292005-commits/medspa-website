@@ -62,7 +62,7 @@ const TREATMENTS = [
 const BENEFITS = [
   "100% Doctor Administered or Supervised",
   "Micro-Cannula Techniques for Minimal Bruising",
-  "Subtle, Rested Results — Never Frozen",
+  "Subtle, Rested Results, Never Frozen",
   "Comprehensive Upfront Facial Mapping",
 ] as const;
 

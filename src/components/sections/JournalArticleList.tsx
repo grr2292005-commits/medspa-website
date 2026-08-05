@@ -36,7 +36,7 @@ const ARTICLES: Article[] = [
     content: [
       "In modern aesthetic medicine, the goal has evolved from sheer volume replacement to delicate architectural harmonization. When we inject neuromodulators or dermal fillers, we must respect the dynamic muscular vectors that define your natural facial expression.",
       "Micro-dosing involves applying precise, diluted micro-quantities of neuromodulators at strategic dermal insertion points. This relaxes superficial muscle fibers that cause dynamic forehead and peri-orbital etching without impairing deeper motor function.",
-      "The result is a face that moves naturally, reflects light evenly, and looks completely rested—never frozen or overfilled.",
+      "The result is a face that moves naturally, reflects light evenly, and looks completely rested, never frozen or overfilled.",
     ],
     image: facialsImg,
   },

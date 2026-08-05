@@ -3,14 +3,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { NavItem } from "./NavItem";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useLanguage, Language } from "@/context/LanguageContext";
 import logoSvg from "../../../public/assets/svg/ic_logo_1.svg";
+import downDirectorSvg from "../../../public/assets/svg/ic_down_director.svg";
 
-const LANGUAGES = ["EN", "FR", "DE"] as const;
+const LANGUAGES: Language[] = ["EN", "FR", "DE"];
 
 export const Navbar: React.FC = () => {
-  const [lang, setLang] = useState("EN");
+  const { language, setLanguage, t } = useLanguage();
   const [langOpen, setLangOpen] = useState(false);
 
   return (
@@ -41,40 +44,49 @@ export const Navbar: React.FC = () => {
             className="hidden md:flex items-center gap-[32px]"
             aria-label="Main Navigation"
           >
-            <NavItem href="/about" label="About" />
-            <NavItem href="/treatments" label="Treatments" hasDropdown />
-            <NavItem href="/results" label="Results" />
-            <NavItem href="/journal" label="Journal" />
-            <NavItem href="/contact" label="Contact" />
+            <NavItem href="/about" label={t("nav_about")} />
+            <NavItem href="/treatments" label={t("nav_treatments")} hasDropdown />
+            <NavItem href="/results" label={t("nav_results")} />
+            <NavItem href="/journal" label={t("nav_journal")} />
+            <NavItem href="/contact" label={t("nav_contact")} />
           </nav>
         </div>
 
         {/* Right Side: Language Selector + CTA */}
         <div className="flex items-center gap-[24px]">
-          {/* EN Language Selector Dropdown */}
+          {/* Language Selector Dropdown using Treatments SVG Arrow */}
           <div className="relative">
             <button
               type="button"
               onClick={() => setLangOpen(!langOpen)}
-              className="font-sans text-[15px] sm:text-[16px] leading-[19px] tracking-[-0.02em] font-normal text-white hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 cursor-pointer flex items-center gap-1"
+              className="font-sans text-[15px] sm:text-[16px] leading-[19px] tracking-[-0.02em] font-normal text-white hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 cursor-pointer flex items-center gap-[6px]"
               aria-label="Select language"
             >
-              <span>{lang}</span>
-              <span className="text-[10px] opacity-70">▼</span>
+              <span>{language}</span>
+              <Image
+                src={downDirectorSvg}
+                alt=""
+                width={16}
+                height={8}
+                className={cn(
+                  "w-[15.5px] h-[7.5px] shrink-0 transition-transform duration-200",
+                  langOpen ? "rotate-180" : ""
+                )}
+              />
             </button>
 
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 bg-[#FAF7F2] rounded-[14px] p-2 shadow-xl border border-[#E8DFD1] min-w-[70px] flex flex-col gap-1 z-50">
+              <div className="absolute right-0 top-full mt-2 bg-[#FAF7F2] rounded-[14px] p-2 shadow-xl border border-[#E8DFD1] min-w-[80px] flex flex-col gap-1 z-50">
                 {LANGUAGES.map((l) => (
                   <button
                     key={l}
                     type="button"
                     onClick={() => {
-                      setLang(l);
+                      setLanguage(l);
                       setLangOpen(false);
                     }}
                     className={`font-sans text-[14px] px-3 py-1.5 rounded-[8px] text-left transition-colors ${
-                      lang === l
+                      language === l
                         ? "bg-[#3C4233] text-white font-medium"
                         : "text-[#1C1C1C] hover:bg-[#F5EFE6]"
                     }`}
@@ -87,7 +99,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Primary CTA */}
-          <PrimaryButton href="/contact">Book Consultation</PrimaryButton>
+          <PrimaryButton href="/contact">{t("nav_book")}</PrimaryButton>
         </div>
       </div>
     </header>
