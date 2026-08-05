@@ -39,6 +39,17 @@ export async function POST(request: Request) {
     // 2. Database Insert into Supabase
     const supabase = getSupabaseAdminClient();
 
+    if (!supabase) {
+      console.error("[Appointments API] Supabase environment variables are missing.");
+      return NextResponse.json<ApiResponse>(
+        {
+          success: false,
+          error: "Database configuration error. Please contact the administrator.",
+        },
+        { status: 500 }
+      );
+    }
+
     const { data: appointment, error: dbError } = await supabase
       .from("appointments")
       .insert({

@@ -1,19 +1,18 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl) {
-  throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL environment variable.");
-}
-
-// Server-only client with Service Role Key for administrative bypass / backend database writes
+// Lazy server-only client instantiation (prevents build-time missing env var exceptions)
 export const getSupabaseAdminClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   const key = supabaseServiceRoleKey || supabaseAnonKey;
-  if (!key) {
-    throw new Error("Missing Supabase API key in environment variables.");
+
+  if (!supabaseUrl || !key) {
+    console.warn("Supabase URL or API Key environment variables are missing.");
+    return null;
   }
+
   return createClient(supabaseUrl, key, {
     auth: {
       persistSession: false,
