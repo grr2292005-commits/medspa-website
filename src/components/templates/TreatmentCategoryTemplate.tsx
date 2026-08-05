@@ -15,6 +15,11 @@ export interface TreatmentItem {
   description: string;
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 export interface TreatmentCategoryTemplateProps {
   title: string;
   italicWord: string;
@@ -26,6 +31,7 @@ export interface TreatmentCategoryTemplateProps {
   overviewDescription: string;
   treatmentsList: readonly TreatmentItem[];
   benefits: readonly string[];
+  faqs?: readonly FAQItem[];
 }
 
 export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps> = ({
@@ -39,6 +45,7 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
   overviewDescription,
   treatmentsList,
   benefits,
+  faqs,
 }) => {
   return (
     <main className="bg-[#FAF7F2] min-h-screen">
@@ -102,7 +109,7 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
       <section className="py-[80px] sm:py-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]" id="overview">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-7 flex flex-col gap-6">
-            <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#64748b]">
+            <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071]">
               CLINICAL PHILOSOPHY
             </span>
             <h2 className="font-serif font-medium text-[36px] sm:text-[44px] text-[#1C1C1C] leading-[1.15]">
@@ -136,9 +143,9 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
       </section>
 
       {/* Individual Treatment Items Stack */}
-      <section className="py-[60px] pb-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]">
+      <section className="py-[60px] pb-[80px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]">
         <div className="mb-10">
-          <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#64748b]">
+          <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071]">
             AVAILABLE PROCEDURES
           </span>
           <h2 className="font-serif font-medium text-[36px] sm:text-[44px] text-[#1C1C1C] mt-2">
@@ -170,7 +177,7 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E8DFD1]/60 flex flex-col gap-2 font-sans text-[13px] text-[#64748b]">
+              <div className="pt-4 border-t border-[#E8DFD1]/60 flex flex-col gap-2 font-sans text-[13px] text-[#526071]">
                 <p>
                   <strong className="text-[#1C1C1C]">Ideal For:</strong> {item.idealFor}
                 </p>
@@ -182,6 +189,36 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
           ))}
         </div>
       </section>
+
+      {/* Frequently Asked Questions (AEO & GEO Section) */}
+      {faqs && faqs.length > 0 && (
+        <section className="py-[60px] pb-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]">
+          <div className="mb-10 max-w-[640px]">
+            <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071]">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+            <h2 className="font-serif font-medium text-[36px] sm:text-[44px] text-[#1C1C1C] mt-2">
+              Clinical Insights & Expectations
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {faqs.map((faq) => (
+              <div
+                key={faq.question}
+                className="bg-[#F5EFE6] rounded-[24px] p-8 border border-[#E8DFD1] flex flex-col gap-3"
+              >
+                <h3 className="font-serif font-medium text-[20px] text-[#1C1C1C]">
+                  {faq.question}
+                </h3>
+                <p className="font-sans text-[15px] text-[#4A4630] leading-[1.6]">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <FooterSection />
     </main>

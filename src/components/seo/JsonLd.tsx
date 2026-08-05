@@ -269,7 +269,7 @@ export interface FAQItem {
 }
 
 export interface FAQPageJsonLdProps {
-  mainEntity: FAQItem[];
+  mainEntity: readonly FAQItem[];
 }
 
 export const FAQPageJsonLd: React.FC<FAQPageJsonLdProps> = ({ mainEntity }) => {

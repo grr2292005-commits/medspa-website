@@ -77,7 +77,7 @@ const FAQ_ITEMS = [
     answer:
       "We utilize precise micro-dosing and micro-cannula placement techniques along deep periosteal structural planes, working conservatively to honor your natural facial features.",
   },
-];
+] as const;
 
 export default function InjectablesPage() {
   return (
@@ -111,6 +111,7 @@ export default function InjectablesPage() {
         overviewDescription="We believe injectable treatments should enhance your natural bone structure, not replace it. Our board-certified physicians use micro-dosing and cannula delivery methods to restore volume loss, soften expression lines, and bring harmony to your facial features."
         treatmentsList={TREATMENTS}
         benefits={BENEFITS}
+        faqs={FAQ_ITEMS}
       />
     </>
   );

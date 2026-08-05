@@ -77,7 +77,7 @@ const FAQ_ITEMS = [
     answer:
       "Yes, Lumecca IPL features customized optical filters specifically designed to safely target vascular lesions and calm rosacea redness.",
   },
-];
+] as const;
 
 export default function LaserPage() {
   return (
@@ -111,6 +111,7 @@ export default function LaserPage() {
         overviewDescription="Sun exposure, environmental stress, and vascular changes leave uneven pigment and diffuse redness over time. Our advanced laser and IPL technologies deliver specific light wavelengths directly into targeted chromophores, safely breaking down excess melanin and broken capillaries."
         treatmentsList={TREATMENTS}
         benefits={BENEFITS}
+        faqs={FAQ_ITEMS}
       />
     </>
   );

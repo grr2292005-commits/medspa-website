@@ -77,7 +77,7 @@ const FAQ_ITEMS = [
     answer:
       "We typically recommend a package of 3 sessions spaced 4 to 6 weeks apart for maximum structural collagen rebuilding and dermal firming.",
   },
-];
+] as const;
 
 export default function CollagenPage() {
   return (
@@ -111,6 +111,7 @@ export default function CollagenPage() {
         overviewDescription="Skin longevity depends on structural collagen integrity. Our collagen remodeling protocols utilize advanced energy devices and autologous growth factors to stimulate your body's natural healing cascade, resulting in tighter pores, firmer skin, and smoother texture."
         treatmentsList={TREATMENTS}
         benefits={BENEFITS}
+        faqs={FAQ_ITEMS}
       />
     </>
   );

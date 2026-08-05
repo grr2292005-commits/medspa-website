@@ -77,7 +77,7 @@ const FAQ_ITEMS = [
     answer:
       "For optimal skin barrier maintenance and cellular turnover, we recommend scheduling a HydraFacial MD session every 4 weeks.",
   },
-];
+] as const;
 
 export default function HydrationPage() {
   return (
@@ -111,6 +111,7 @@ export default function HydrationPage() {
         overviewDescription="True glow cannot be achieved on dehydrated or inflamed skin. Our hydration protocols combine vortex-fusion extraction with clinical-grade nanoparticle exosomes and ceramides to repair your skin barrier and unlock luminous, glass-skin clarity."
         treatmentsList={TREATMENTS}
         benefits={BENEFITS}
+        faqs={FAQ_ITEMS}
       />
     </>
   );
