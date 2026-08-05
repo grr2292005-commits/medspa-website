@@ -155,11 +155,11 @@ export async function sendCustomerConfirmationEmail(
       success: false,
       error: brevoResult?.error || "No email provider available.",
     };
-  } catch (error) {
-    console.error(`Failed to send customer confirmation email to (${params.email}):`, error);
+  } catch (err) {
+    console.error(`Failed to send customer confirmation email to (${params.email}):`, err);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown email error",
+      error: err instanceof Error ? err.message : "Unknown email error",
     };
   }
 }
@@ -210,11 +210,11 @@ export async function sendClinicNotificationEmail(
       success: false,
       error: brevoResult?.error || "No email provider available.",
     };
-  } catch (error) {
-    console.error(`Failed to send clinic notification email to (${adminRecipient}):`, error);
+  } catch (err) {
+    console.error(`Failed to send clinic notification email to (${adminRecipient}):`, err);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown email error",
+      error: err instanceof Error ? err.message : "Unknown email error",
     };
   }
 }
