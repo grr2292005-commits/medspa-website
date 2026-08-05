@@ -72,6 +72,7 @@ export const BookingForm: React.FC = () => {
                 id="booking-full-name"
                 type="text"
                 required
+                autoComplete="name"
                 placeholder="e.g. John Doe"
                 value={formData.fullName}
                 onChange={(e) =>
@@ -90,6 +91,7 @@ export const BookingForm: React.FC = () => {
                 id="booking-email"
                 type="email"
                 required
+                autoComplete="email"
                 placeholder="youremail@example.com"
                 value={formData.email}
                 onChange={(e) =>
@@ -108,7 +110,8 @@ export const BookingForm: React.FC = () => {
                 id="booking-phone"
                 type="tel"
                 required
-                placeholder="e.g. +49 1234 5678 90"
+                autoComplete="tel"
+                placeholder="e.g. +1 (310) 555-0192"
                 value={formData.phone}
                 onChange={(e) =>
                   setFormData({ ...formData, phone: e.target.value })
@@ -135,7 +138,7 @@ export const BookingForm: React.FC = () => {
                   <option value="" disabled>
                     Select Treatment
                   </option>
-                  <option value="injectables">Injectables</option>
+                  <option value="injectables">Injectables & Sculpting</option>
                   <option value="facials">Facials & Skin Rehab</option>
                   <option value="laser">Laser & Light Therapy</option>
                   <option value="body">Body & Wellness</option>
@@ -216,14 +219,18 @@ export const BookingForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-2">
+          {/* Submit Button & Conversion Trust Micro-copy */}
+          <div className="pt-2 flex flex-col gap-2.5">
             <button
               type="submit"
-              className="bg-[#3C4233] hover:bg-[#2D3227] text-white rounded-[66px] px-9 h-[52px] font-sans font-medium text-[16px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233] cursor-pointer shadow-md"
+              className="bg-[#3C4233] hover:bg-[#2D3227] text-white rounded-[66px] px-9 h-[52px] font-sans font-medium text-[16px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233] cursor-pointer shadow-md w-full sm:w-auto"
             >
               Reserve My Session
             </button>
+            <p className="font-sans text-[12px] text-[#526071] flex items-center gap-1.5 pt-0.5">
+              <span>🔒</span>
+              <span>Zero-commitment consultation • 100% Doctor-supervised • No pressure selling</span>
+            </p>
           </div>
         </form>
       )}

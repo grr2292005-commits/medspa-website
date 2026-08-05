@@ -31,11 +31,18 @@ export const AvatarGroup: React.FC = () => {
         ))}
       </div>
 
-      {/* Caption Text */}
-      <p className="text-[13px] leading-[16px] font-normal tracking-[-0.02em] max-w-[160px]">
-        <span className="text-[#EFE3D8]">400+ </span>
-        <span className="text-[#FFFFFF]">Individuals who have trusted Solène</span>
-      </p>
+      {/* Social Proof Star Rating Stack */}
+      <div className="flex flex-col gap-0.5">
+        <div className="flex items-center gap-1.5">
+          <div className="flex text-[#F59E0B] text-[13px] tracking-tight" aria-label="5 out of 5 stars rating">
+            ★★★★★
+          </div>
+          <span className="text-[12px] font-semibold text-[#EFE3D8]">4.9 / 5.0</span>
+        </div>
+        <p className="text-[12px] leading-[15px] font-normal tracking-[-0.01em] text-[#FFFFFF]/90">
+          400+ Verified Clients in Beverly Hills
+        </p>
+      </div>
     </div>
   );
 };
