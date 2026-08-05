@@ -4,40 +4,43 @@ import React from "react";
 import Image from "next/image";
 import { m as motion } from "framer-motion";
 import { ServiceCard } from "@/components/ui/ServiceCard";
+import { useLanguage } from "@/context/LanguageContext";
 import injectablesImg from "../../../public/assets/Injectables.png";
 import facialsImg from "../../../public/assets/Facials and Skin.png";
 import laserImg from "../../../public/assets/Laser and Light.png";
 import bodyImg from "../../../public/assets/Body and Wellness.png";
 import ourLogoSvg from "../../../public/assets/svg/ic_our_logo.svg";
 
-const SERVICES = [
-  {
-    title: "Injectables",
-    subtitle: "Precision sculpting for natural, subtle results",
-    image: injectablesImg,
-    href: "/treatments/injectables",
-  },
-  {
-    title: "Facials and Skin",
-    subtitle: "Deep medical hydration for cellular renewal",
-    image: facialsImg,
-    href: "/treatments/hydration",
-  },
-  {
-    title: "Laser and Light",
-    subtitle: "Targeted light therapy for skin clarity",
-    image: laserImg,
-    href: "/treatments/laser",
-  },
-  {
-    title: "Body and Wellness",
-    subtitle: "Advanced body contouring and holistic wellness",
-    image: bodyImg,
-    href: "/treatments/collagen",
-  },
-] as const;
-
 export const ServicesSection: React.FC = () => {
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      title: t("service_1_title"),
+      subtitle: t("service_1_sub"),
+      image: injectablesImg,
+      href: "/treatments/injectables",
+    },
+    {
+      title: t("service_2_title"),
+      subtitle: t("service_2_sub"),
+      image: facialsImg,
+      href: "/treatments/hydration",
+    },
+    {
+      title: t("service_3_title"),
+      subtitle: t("service_3_sub"),
+      image: laserImg,
+      href: "/treatments/laser",
+    },
+    {
+      title: t("service_4_title"),
+      subtitle: t("service_4_sub"),
+      image: bodyImg,
+      href: "/treatments/collagen",
+    },
+  ];
+
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="services">
       <div className="mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px]">
@@ -52,17 +55,17 @@ export const ServicesSection: React.FC = () => {
           {/* Title & Subtitle Stack */}
           <div className="max-w-[640px]">
             {/* Category Kicker */}
-            <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#64748b] mb-3">
-              OUR SERVICES
+            <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071] mb-3">
+              {t("services_kicker")}
             </span>
 
             {/* Section H2 Heading */}
             <h2 className="font-serif font-medium text-[38px] sm:text-[48px] lg:text-[54px] leading-[1.12] tracking-[-0.01em] text-[#1C1C1C]">
-              Enhance Your Natural <br />
+              {t("services_heading_1")} <br />
               <em className="font-serif italic font-light text-[#3C4233]">
-                Radiance
+                {t("services_heading_2")}
               </em>{" "}
-              and Well Being
+              {t("services_heading_3")}
             </h2>
           </div>
 
@@ -80,7 +83,7 @@ export const ServicesSection: React.FC = () => {
 
         {/* 4-Column Services Grid with Framer Motion Stagger */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {SERVICES.map((service, idx) => (
+          {services.map((service, idx) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 30 }}

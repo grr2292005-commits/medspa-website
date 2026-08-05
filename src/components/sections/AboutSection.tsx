@@ -3,29 +3,28 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { m as motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 import soleneDifferenceImg from "../../../public/assets/Solene Difference.png";
 import logoSvg from "../../../public/assets/svg/ic_logo_1.svg";
 
-const POINTS = [
-  {
-    title: "Board Certified Care:",
-    description:
-      "Every treatment is administered or directly supervised by licensed medical doctors.",
-  },
-  {
-    title: "Conservative Enhancement:",
-    description:
-      "We specialize in subtle, undetectable adjustments that keep you looking like yourself.",
-  },
-  {
-    title: "Transparent Consultation:",
-    description:
-      "No unexpected fees or aggressive upsells. Every visit begins with upfront pricing.",
-  },
-] as const;
-
 export const AboutSection: React.FC = () => {
+  const { t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const points = [
+    {
+      title: t("about_point_1_title"),
+      description: t("about_point_1_desc"),
+    },
+    {
+      title: t("about_point_2_title"),
+      description: t("about_point_2_desc"),
+    },
+    {
+      title: t("about_point_3_title"),
+      description: t("about_point_3_desc"),
+    },
+  ];
 
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="about">
@@ -38,12 +37,12 @@ export const AboutSection: React.FC = () => {
           transition={{ duration: 0.7 }}
           className="max-w-[720px] mb-[48px] sm:mb-[60px]"
         >
-          <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#64748b] mb-3">
-            ABOUT US
+          <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071] mb-3">
+            {t("about_kicker")}
           </span>
           <h2 className="font-serif font-medium text-[38px] sm:text-[48px] lg:text-[54px] leading-[1.12] tracking-[-0.01em] text-[#1C1C1C]">
-            A Studio Designed Around Calm, <br />
-            Not Quotes
+            {t("about_heading_1")} <br />
+            {t("about_heading_2")}
           </h2>
         </motion.div>
 
@@ -83,23 +82,20 @@ export const AboutSection: React.FC = () => {
             <div className="flex flex-col gap-6">
               {/* Card Title */}
               <h3 className="font-serif font-medium text-[36px] sm:text-[42px] leading-[1.15] text-[#1C1C1C]">
-                The{" "}
+                {t("about_diff_title_1")}{" "}
                 <span className="text-[#3C4233] font-semibold">Soléne</span>{" "}
                 <br />
-                Difference
+                {t("about_diff_title_2")}
               </h3>
 
               {/* Subtitle Paragraph */}
               <p className="font-sans font-normal text-[15px] leading-[1.6] text-[#4A4630] tracking-[-0.01em]">
-                Solène was founded to redefine aesthetic medicine. We sit
-                between cold, clinical offices and rushed medspa chains,
-                delivering board certified expertise in an unhurried, sanctuary
-                like environment.
+                {t("about_diff_desc")}
               </p>
 
               {/* Interactive Points Stack */}
               <div className="relative flex flex-col gap-5 pt-4">
-                {POINTS.map((point, idx) => {
+                {points.map((point, idx) => {
                   const isActive = activeIndex === idx;
                   return (
                     <div

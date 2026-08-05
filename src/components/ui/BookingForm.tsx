@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
 import calendarSvg from "../../../public/assets/svg/ic_calendar.svg";
 import downDirectorSvg from "../../../public/assets/svg/ic_down_director.svg";
 
 export const BookingForm: React.FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -27,14 +29,13 @@ export const BookingForm: React.FC = () => {
       {/* Header */}
       <div className="mb-6">
         <h3 className="font-serif font-medium text-[32px] sm:text-[40px] leading-[1.12] text-[#1C1C1C] mb-2">
-          Begin your{" "}
+          {t("booking_title_1")}{" "}
           <em className="font-serif italic font-light text-[#3C4233]">
-            Transformation
+            {t("booking_title_2")}
           </em>
         </h3>
         <p className="font-sans font-normal text-[15px] sm:text-[16px] leading-[1.5] text-[#4A4630]/85">
-          Select your preferred treatment, date, and time. Our concierge team
-          will prepare the rest.
+          {t("booking_sub")}
         </p>
       </div>
 
@@ -46,18 +47,17 @@ export const BookingForm: React.FC = () => {
             ✓
           </div>
           <h4 className="font-serif font-semibold text-[24px] text-[#1C1C1C]">
-            Session Reserved
+            {t("booking_success_title")}
           </h4>
           <p className="font-sans text-[15px] text-[#4A4630]/80 max-w-[340px]">
-            Thank you! Our concierge team will reach out shortly to confirm your
-            appointment details.
+            {t("booking_success_desc")}
           </p>
           <button
             type="button"
             onClick={() => setSubmitted(false)}
             className="mt-2 text-[14px] font-sans underline text-[#3C4233] cursor-pointer"
           >
-            Book another session
+            {t("booking_another")}
           </button>
         </div>
       ) : (
@@ -66,7 +66,7 @@ export const BookingForm: React.FC = () => {
             {/* Full Name */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-full-name" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Full Name
+                {t("booking_name")}
               </label>
               <input
                 id="booking-full-name"
@@ -85,7 +85,7 @@ export const BookingForm: React.FC = () => {
             {/* Email Address */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-email" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Email Address
+                {t("booking_email_label")}
               </label>
               <input
                 id="booking-email"
@@ -104,7 +104,7 @@ export const BookingForm: React.FC = () => {
             {/* Phone Number */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-phone" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Phone Number
+                {t("booking_phone")}
               </label>
               <input
                 id="booking-phone"
@@ -123,7 +123,7 @@ export const BookingForm: React.FC = () => {
             {/* Treatment Type */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-treatment" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Treatment Type
+                {t("booking_treatment_label")}
               </label>
               <div className="relative">
                 <select
@@ -158,7 +158,7 @@ export const BookingForm: React.FC = () => {
             {/* Date Picker */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-date" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Date
+                {t("booking_date")}
               </label>
               <div className="relative">
                 <input
@@ -186,7 +186,7 @@ export const BookingForm: React.FC = () => {
             {/* Time Selector */}
             <div className="flex flex-col gap-2">
               <label htmlFor="booking-time" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
-                Time
+                {t("booking_time")}
               </label>
               <div className="relative">
                 <select
@@ -225,11 +225,10 @@ export const BookingForm: React.FC = () => {
               type="submit"
               className="bg-[#3C4233] hover:bg-[#2D3227] text-white rounded-[66px] px-9 h-[52px] font-sans font-medium text-[16px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233] cursor-pointer shadow-md w-full sm:w-auto"
             >
-              Reserve My Session
+              {t("booking_btn")}
             </button>
             <p className="font-sans text-[12px] text-[#526071] flex items-center gap-1.5 pt-0.5">
-              <span>🔒</span>
-              <span>Zero-commitment consultation • 100% Doctor-supervised • No pressure selling</span>
+              <span>{t("booking_guarantee")}</span>
             </p>
           </div>
         </form>

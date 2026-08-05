@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { m as motion } from "framer-motion";
+import Link from "next/link";
 import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { useLanguage } from "@/context/LanguageContext";
 import acneImg from "../../../public/assets/Slider image with acne.png";
 import clearImg from "../../../public/assets/Slider image with no acne.png";
 import leftDirectorSvg from "../../../public/assets/svg/ic_left_director.svg";
@@ -28,6 +30,7 @@ const TESTIMONIALS = [
 ] as const;
 
 export const ClinicalOutcomesSection: React.FC = () => {
+  const { t } = useLanguage();
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const handlePrev = () => {
@@ -58,15 +61,15 @@ export const ClinicalOutcomesSection: React.FC = () => {
           >
             {/* Header & Subtitle */}
             <div className="flex flex-col gap-4">
-              <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#64748b]">
-                REAL CLINICAL OUTCOMES
+              <span className="font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-[#526071]">
+                {t("results_kicker")}
               </span>
 
               <h2 className="font-serif font-medium text-[38px] sm:text-[48px] lg:text-[52px] leading-[1.1] tracking-[-0.01em] text-[#1C1C1C]">
-                Undetectable Adjustments <br />
-                Unmistakable{" "}
+                {t("results_heading_1")} <br />
+                {t("results_heading_2")}{" "}
                 <em className="font-serif italic font-light text-[#3C4233]">
-                  Radiance
+                  {t("results_heading_3")}
                 </em>
               </h2>
 
@@ -79,14 +82,14 @@ export const ClinicalOutcomesSection: React.FC = () => {
 
             {/* Action Buttons Row */}
             <div className="flex flex-wrap items-center gap-4">
-              <PrimaryButton href="#book">Book Consultation</PrimaryButton>
+              <PrimaryButton href="#book">{t("nav_book")}</PrimaryButton>
 
-              <a
-                href="#services"
+              <Link
+                href="/results"
                 className="inline-flex items-center justify-center bg-white hover:bg-[#F5EFE6] text-[#1C1C1C] rounded-[66px] h-[44px] px-7 text-[15px] font-sans font-medium transition-colors border border-[#E8DFD1]"
               >
-                Explore Services
-              </a>
+                {t("results_cta")}
+              </Link>
             </div>
 
             {/* Testimonial Block */}
@@ -114,7 +117,7 @@ export const ClinicalOutcomesSection: React.FC = () => {
               </blockquote>
 
               {/* Author & Verification */}
-              <p className="font-sans text-[13px] leading-[1.4] text-[#64748b]">
+              <p className="font-sans text-[13px] leading-[1.4] text-[#526071]">
                 <strong className="font-semibold text-[#1C1C1C]">
                   {current.author}
                 </strong>{" "}

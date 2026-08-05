@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BookingForm } from "@/components/ui/BookingForm";
+import { useLanguage } from "@/context/LanguageContext";
 import footerBannerImg from "../../../public/assets/Footer Section Image.png";
 import ourLogoSvg from "../../../public/assets/svg/ic_our_logo.svg";
 
 export const FooterSection: React.FC = () => {
+  const { t } = useLanguage();
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -50,7 +52,6 @@ export const FooterSection: React.FC = () => {
         {/* Top Header Row: Large Solène S Emblem & Wordmark */}
         <div className="flex items-center justify-end border-b border-white/10 pb-[48px] mb-[56px]">
           <div className="flex items-center gap-4 sm:gap-6">
-            {/* S Leaf Logo Emblem on the left of SOLÈNE text */}
             <Image
               src={ourLogoSvg}
               alt="Solène S Logo Emblem"
@@ -69,12 +70,11 @@ export const FooterSection: React.FC = () => {
           {/* Column 1: Studio Description & Social Links */}
           <div className="lg:col-span-3 flex flex-col gap-6">
             <p className="font-sans text-[14px] leading-[1.6] text-white/75 max-w-[240px]">
-              Personalized aesthetic studio tailored for you.
+              {t("footer_tagline")}
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3">
-              {/* Instagram */}
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -98,7 +98,6 @@ export const FooterSection: React.FC = () => {
                 </svg>
               </a>
 
-              {/* X / Twitter */}
               <a
                 href="https://x.com"
                 target="_blank"
@@ -106,17 +105,11 @@ export const FooterSection: React.FC = () => {
                 aria-label="X (Twitter)"
                 className="w-9 h-9 rounded-full border border-white/30 hover:border-white flex items-center justify-center text-white/80 hover:text-white transition-colors"
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
 
-              {/* Facebook */}
               <a
                 href="https://facebook.com"
                 target="_blank"
@@ -143,32 +136,32 @@ export const FooterSection: React.FC = () => {
           {/* Column 2: Explore Links */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <h4 className="font-serif font-medium text-[18px] text-white">
-              Explore
+              {t("footer_explore")}
             </h4>
             <ul className="flex flex-col gap-2.5 font-sans text-[14px] text-white/70">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  About us
+                  {t("footer_about")}
                 </Link>
               </li>
               <li>
                 <Link href="/about#pillars" className="hover:text-white transition-colors">
-                  Our Philosophy
+                  {t("footer_philosophy")}
                 </Link>
               </li>
               <li>
                 <Link href="/results" className="hover:text-white transition-colors">
-                  Results Gallery
+                  {t("footer_results_link")}
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  Medical Team
+                  {t("footer_team_link")}
                 </Link>
               </li>
               <li>
                 <Link href="/journal" className="hover:text-white transition-colors">
-                  Journal
+                  {t("footer_journal_link")}
                 </Link>
               </li>
             </ul>
@@ -177,27 +170,27 @@ export const FooterSection: React.FC = () => {
           {/* Column 3: Services Links */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <h4 className="font-serif font-medium text-[18px] text-white">
-              Services
+              {t("footer_services")}
             </h4>
             <ul className="flex flex-col gap-2.5 font-sans text-[14px] text-white/70">
               <li>
                 <Link href="/treatments/injectables" className="hover:text-white transition-colors">
-                  Injectables
+                  {t("footer_injectables")}
                 </Link>
               </li>
               <li>
                 <Link href="/treatments/hydration" className="hover:text-white transition-colors">
-                  Skin Rehab
+                  {t("footer_rehab")}
                 </Link>
               </li>
               <li>
                 <Link href="/treatments/laser" className="hover:text-white transition-colors">
-                  Laser Therapy
+                  {t("footer_laser")}
                 </Link>
               </li>
               <li>
                 <Link href="/treatments/collagen" className="hover:text-white transition-colors">
-                  Collagen
+                  {t("footer_collagen")}
                 </Link>
               </li>
             </ul>
@@ -207,16 +200,16 @@ export const FooterSection: React.FC = () => {
           <div className="lg:col-span-2 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <h4 className="font-serif font-medium text-[18px] text-white">
-                Address
+                {t("footer_address")}
               </h4>
               <p className="font-sans text-[14px] leading-[1.5] text-white/70">
-                1044 Heritage Way, Suite 200, Beverly Hills, California 90210
+                {t("footer_address_val")}
               </p>
             </div>
 
             <div className="flex flex-col gap-1.5 pt-2">
               <h4 className="font-serif font-medium text-[18px] text-white">
-                Email
+                {t("footer_email")}
               </h4>
               <a
                 href="mailto:concierge@solenestudio.com"
@@ -230,10 +223,10 @@ export const FooterSection: React.FC = () => {
           {/* Column 5: Newsletter Subscription */}
           <div className="lg:col-span-3 flex flex-col gap-4">
             <h4 className="font-serif font-medium text-[18px] text-white">
-              Subscribe newsletter
+              {t("footer_newsletter")}
             </h4>
             <p className="font-sans text-[13px] leading-[1.5] text-white/70">
-              Stay updated with the latest news and offers!
+              {t("footer_sub_text")}
             </p>
 
             {subscribed ? (
@@ -265,7 +258,7 @@ export const FooterSection: React.FC = () => {
 
         {/* Bottom Copyright */}
         <div className="pt-[48px] mt-[48px] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-[12px] text-white/60">
-          <p>© {new Date().getFullYear()} Solène Studio. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Solène Studio. {t("footer_rights")}</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white/70 transition-colors">
               Privacy Policy
