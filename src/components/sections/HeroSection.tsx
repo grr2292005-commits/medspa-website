@@ -8,14 +8,17 @@ import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { TrustChecklist } from "@/components/ui/TrustChecklist";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { FloatingBadge } from "@/components/ui/FloatingBadge";
+import { useLanguage } from "@/context/LanguageContext";
 import heroImg from "../../../public/assets/Home Hero Section.png";
 import ellipseLayerImg from "../../../public/assets/Ellipse 1.png";
 
 export const HeroSection: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full h-[100svh] min-h-[720px] max-h-[1080px] overflow-hidden bg-[#1F221B] flex flex-col justify-between">
       {/* Background Image Container */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
         {/* Main Hero Background Image */}
         <Image
           src={heroImg}
@@ -24,14 +27,14 @@ export const HeroSection: React.FC = () => {
           priority
           sizes="100vw"
           className="object-cover object-[92%_top] xl:object-[95%_top] pointer-events-none select-none"
-          quality={100}
+          quality={90}
         />
 
-        {/* Ellipse 1 Glow Layer (Ellipse 1.png) */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-80 mix-blend-screen">
+        {/* Ambient Glow Layer */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none opacity-60 mix-blend-screen">
           <Image
             src={ellipseLayerImg}
-            alt="Golden Ambient Lighting"
+            alt=""
             fill
             sizes="100vw"
             className="object-cover object-center pointer-events-none"
@@ -39,26 +42,18 @@ export const HeroSection: React.FC = () => {
           />
         </div>
 
-        {/* Linear Gradient Layer (10% opacity: #666666 top to #000000 bottom) */}
+        {/* Left Dark Gradient Overlay for Text Readability */}
         <div
-          className="absolute inset-0 bg-gradient-to-b from-[#666666] to-[#000000] opacity-10 pointer-events-none z-10"
+          className="absolute inset-0 bg-gradient-to-r from-[#1F221B]/85 via-[#1F221B]/40 to-transparent w-full md:w-[60%] pointer-events-none"
           aria-hidden="true"
         />
 
-        {/* Ambient Dark Gradient Overlay for Text Readability */}
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-[#1F221B]/85 via-[#1F221B]/40 to-transparent w-full md:w-[60%] pointer-events-none z-10"
-          aria-hidden="true"
-        />
-
-        {/* Floating Glassmorphism Refraction Badges attached directly to background image container */}
+        {/* Floating Glassmorphism Refraction Badges */}
         <div className="absolute inset-0 w-full h-full max-w-[1440px] mx-auto pointer-events-none z-20 hidden md:block">
-          {/* Cellular Rejuvenation (Top Right near subject's hair) */}
           <FloatingBadge
             label="Cellular Rejuvenation"
             className="absolute top-[16.3%] left-[79%] -translate-x-1/2"
           />
-          {/* Facial Architecture (Lower Center near subject's chin) */}
           <FloatingBadge
             label="Facial Architecture"
             className="absolute top-[66%] left-[47.3%] -translate-x-1/2"
@@ -84,22 +79,20 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="font-serif font-normal text-[48px] sm:text-[56px] lg:text-[64px] leading-[1.08] tracking-[-0.01em] text-[#FAF7F2]"
           >
-            Aesthetic Medicine, <br />
-            Refined for <br />
-            Natural <em className="font-serif italic font-light">Radiance</em>
+            {t("hero_title_1")} <br />
+            {t("hero_title_2")} <br />
+            {t("hero_title_3")}{" "}
+            <em className="font-serif italic font-light">{t("hero_title_4")}</em>
           </motion.h1>
 
-          {/* Subtitle Paragraph (Public Sans, 16px, Regular, Letter-spacing -2%) */}
+          {/* Subtitle Paragraph */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-sans font-normal text-[15px] sm:text-[16px] leading-[1.55] tracking-[-0.02em] text-[#FAF7F2]/80 max-w-[480px]"
           >
-            Solène pairs board-certified medical expertise with bespoke,
-            non-invasive therapies in a calm studio environment. From facial
-            architecture to skin longevity, experience subtle, elevated results
-            built around your natural features.
+            {t("hero_subtitle")}
           </motion.p>
 
           {/* Primary CTA Button */}
@@ -109,7 +102,7 @@ export const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="pt-2"
           >
-            <PrimaryButton href="#book">Book Consultation</PrimaryButton>
+            <PrimaryButton href="#book">{t("hero_cta")}</PrimaryButton>
           </motion.div>
 
           {/* Trust Indicators Checklist */}
