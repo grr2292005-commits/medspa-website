@@ -1,5 +1,6 @@
 import React from "react";
 import { Resend } from "resend";
+import { BrevoClient } from "@getbrevo/brevo";
 import { render } from "@react-email/components";
 import CustomerConfirmationEmail from "@/emails/CustomerConfirmation";
 import ClinicNotificationEmail from "@/emails/ClinicNotification";
@@ -9,8 +10,9 @@ const getResendClient = () => {
   return apiKey ? new Resend(apiKey) : null;
 };
 
-const getBrevoKey = () => {
-  return process.env.BREVO_API_KEY;
+const getBrevoClient = () => {
+  const apiKey = process.env.BREVO_API_KEY;
+  return apiKey ? new BrevoClient({ apiKey }) : null;
 };
 
 const getAdminRecipient = () => {
@@ -42,52 +44,45 @@ interface SendClinicNotificationParams {
   submittedAt: string;
 }
 
-async function sendViaBrevo(
+export interface EmailResult {
+  success: boolean;
+  data?: unknown;
+  error?: string;
+}
+
+async function sendViaBrevoSDK(
   toEmail: string,
   toName: string,
   subject: string,
   htmlContent: string
-) {
-  const brevoKey = getBrevoKey();
-  if (!brevoKey) return null;
+): Promise<EmailResult | null> {
+  const brevo = getBrevoClient();
+  if (!brevo) return null;
 
   try {
-    const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "api-key": brevoKey,
-        "content-type": "application/json",
+    const res = await brevo.transactionalEmails.sendTransacEmail({
+      sender: {
+        name: "Solène Studio",
+        email: "grr2292005@gmail.com",
       },
-      body: JSON.stringify({
-        sender: {
-          name: "Solène Studio",
-          email: "grr2292005@gmail.com",
+      to: [
+        {
+          email: toEmail,
+          name: toName || toEmail,
         },
-        to: [
-          {
-            email: toEmail,
-            name: toName || toEmail,
-          },
-        ],
-        subject,
-        htmlContent,
-      }),
+      ],
+      subject,
+      htmlContent,
     });
 
-    if (!res.ok) {
-      const errData = await res.json().catch(() => null);
-      console.warn("[Brevo API Delivery Issue]", errData);
-      return {
-        success: false,
-        error: errData?.message || `Brevo delivery failed (${res.status})`,
-      };
+    if (res && res.messageId) {
+      console.log(`[Brevo SDK Success] Message ID: ${res.messageId} to ${toEmail}`);
+      return { success: true, data: res };
     }
 
-    const data = await res.json();
-    return { success: true, data };
+    return { success: false, error: "Brevo delivery failed" };
   } catch (err) {
-    console.error("[Brevo Exception]", err);
+    console.error("[Brevo SDK Exception]", err);
     return {
       success: false,
       error: err instanceof Error ? err.message : "Brevo error",
@@ -97,15 +92,15 @@ async function sendViaBrevo(
 
 export async function sendCustomerConfirmationEmail(
   params: SendCustomerConfirmationParams
-) {
+): Promise<EmailResult> {
   try {
     // Render full luxury React Email HTML template
     const html = await render(
       React.createElement(CustomerConfirmationEmail, params)
     );
 
-    // 1. Try Brevo API (Allows sending to ANY customer email worldwide)
-    const brevoResult = await sendViaBrevo(
+    // 1. Try Brevo SDK (Allows sending to ANY customer email worldwide)
+    const brevoResult = await sendViaBrevoSDK(
       params.email,
       params.fullName,
       "Appointment Confirmed | Solène Aesthetic Medicine Studio",
@@ -113,7 +108,6 @@ export async function sendCustomerConfirmationEmail(
     );
 
     if (brevoResult && brevoResult.success) {
-      console.log(`[Email Engine] Customer confirmation sent via Brevo to ${params.email}`);
       return brevoResult;
     }
 
@@ -166,7 +160,7 @@ export async function sendCustomerConfirmationEmail(
 
 export async function sendClinicNotificationEmail(
   params: SendClinicNotificationParams
-) {
+): Promise<EmailResult> {
   const adminRecipient = getAdminRecipient();
 
   try {
@@ -175,8 +169,8 @@ export async function sendClinicNotificationEmail(
       React.createElement(ClinicNotificationEmail, params)
     );
 
-    // 1. Try Brevo API
-    const brevoResult = await sendViaBrevo(
+    // 1. Try Brevo SDK
+    const brevoResult = await sendViaBrevoSDK(
       adminRecipient,
       "Solène Concierge",
       `New Booking Alert: ${params.fullName} - ${params.treatment}`,
@@ -184,7 +178,6 @@ export async function sendClinicNotificationEmail(
     );
 
     if (brevoResult && brevoResult.success) {
-      console.log(`[Email Engine] Clinic notification sent via Brevo to ${adminRecipient}`);
       return brevoResult;
     }
 

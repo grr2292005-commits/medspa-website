@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^6.0.2",
     "@react-email/components": "^1.0.12",
     "@supabase/supabase-js": "^2.112.1",
     "clsx": "^2.1.1",
