@@ -40,11 +40,14 @@ export async function POST(request: Request) {
     const supabase = getSupabaseAdminClient();
 
     if (!supabase) {
-      console.error("[Appointments API] Supabase environment variables are missing.");
+      console.error(
+        "[Appointments API] Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment variables."
+      );
       return NextResponse.json<ApiResponse>(
         {
           success: false,
-          error: "Database configuration error. Please contact the administrator.",
+          error:
+            "Database configuration error: Please add NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel Project Settings ➔ Environment Variables.",
         },
         { status: 500 }
       );

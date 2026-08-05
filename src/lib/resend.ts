@@ -6,7 +6,13 @@ import ClinicNotificationEmail from "@/emails/ClinicNotification";
 
 const getResendClient = () => {
   const apiKey = process.env.RESEND_API_KEY;
-  return apiKey ? new Resend(apiKey) : null;
+  if (!apiKey) {
+    console.warn(
+      "[Resend Email] Missing RESEND_API_KEY environment variable."
+    );
+    return null;
+  }
+  return new Resend(apiKey);
 };
 
 interface SendCustomerConfirmationParams {
@@ -34,7 +40,8 @@ export async function sendCustomerConfirmationEmail(
   params: SendCustomerConfirmationParams
 ) {
   const resend = getResendClient();
-  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
+  const fromEmail =
+    process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping customer confirmation email.");
@@ -72,7 +79,8 @@ export async function sendClinicNotificationEmail(
   params: SendClinicNotificationParams
 ) {
   const resend = getResendClient();
-  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
+  const fromEmail =
+    process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
   const adminEmail = process.env.ADMIN_EMAIL || "hello@solene.com";
 
   if (!resend) {

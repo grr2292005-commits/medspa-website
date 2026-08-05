@@ -9,7 +9,9 @@ export const getSupabaseAdminClient = () => {
   const key = supabaseServiceRoleKey || supabaseAnonKey;
 
   if (!supabaseUrl || !key) {
-    console.warn("Supabase URL or API Key environment variables are missing.");
+    console.warn(
+      "[Supabase Client] Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables."
+    );
     return null;
   }
 
