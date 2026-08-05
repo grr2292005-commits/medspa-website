@@ -1,8 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { primaryFont, serifFont } from "@/styles/fonts";
 import { ClientShell } from "@/components/providers/ClientShell";
 import { MedicalClinicJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#1F221B",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://solenestudio.com"),
@@ -27,6 +34,11 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   alternates: {
     canonical: "https://solenestudio.com",
