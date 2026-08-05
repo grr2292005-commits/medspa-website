@@ -1,7 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
-import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import {
+  MedicalProcedureJsonLd,
+  BreadcrumbJsonLd,
+  WebPageJsonLd,
+  FAQPageJsonLd,
+} from "@/components/seo/JsonLd";
 import laserImg from "../../../../public/assets/Laser and Light.png";
 
 export const metadata: Metadata = {
@@ -61,9 +66,27 @@ const BENEFITS = [
   "Non-Invasive with Minimal Interruption to Daily Life",
 ] as const;
 
+const FAQ_ITEMS = [
+  {
+    question: "How many Lumecca IPL sessions are required to clear sun damage?",
+    answer:
+      "Most clients achieve dramatic clearance of sun spots and vascular redness in 1 to 2 sessions of high-peak Lumecca IPL.",
+  },
+  {
+    question: "Is IPL photofacial safe for sensitive or rosacea-prone skin?",
+    answer:
+      "Yes, Lumecca IPL features customized optical filters specifically designed to safely target vascular lesions and calm rosacea redness.",
+  },
+];
+
 export default function LaserPage() {
   return (
     <>
+      <WebPageJsonLd
+        name="Laser & Photofacials | Solène Studio"
+        description="Lumecca IPL photofacials and fractional laser resurfacing for sun damage clearance and vascular redness."
+        url="/treatments/laser"
+      />
       <MedicalProcedureJsonLd
         name="Lumecca IPL & Laser Photofacial Therapy"
         description="High-peak power intense pulsed light and fractional laser resurfacing for sun damage and skin tone clarification."
@@ -77,6 +100,7 @@ export default function LaserPage() {
           { name: "Laser & Photofacials", url: "/treatments/laser" },
         ]}
       />
+      <FAQPageJsonLd mainEntity={FAQ_ITEMS} />
       <TreatmentCategoryTemplate
         kicker="PROCEDURE CATEGORY"
         title="Laser & Light"

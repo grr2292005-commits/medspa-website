@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { FooterSection } from "@/components/sections/FooterSection";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/seo/JsonLd";
 import injectablesImg from "../../../public/assets/Injectables.png";
 import facialsImg from "../../../public/assets/Facials and Skin.png";
 import laserImg from "../../../public/assets/Laser and Light.png";
@@ -61,6 +61,11 @@ const TREATMENT_CATEGORIES = [
 export default function TreatmentsPage() {
   return (
     <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <WebPageJsonLd
+        name="Treatments & Clinical Protocols | Solène Aesthetic Medicine"
+        description="Explore our complete doctor-led medical menu: Morpheus8 RF microneedling, dermal fillers, Lumecca IPL, and HydraFacial MD."
+        url="/treatments"
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },

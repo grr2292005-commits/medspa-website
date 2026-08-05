@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { ResultsGalleryFilter } from "@/components/sections/ResultsGalleryFilter";
 import { FooterSection } from "@/components/sections/FooterSection";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, WebPageJsonLd, ReviewJsonLd } from "@/components/seo/JsonLd";
 import resultsHeroImg from "../../../public/assets/results_hero.png";
 
 export const metadata: Metadata = {
@@ -23,15 +23,48 @@ export const metadata: Metadata = {
   },
 };
 
+const CASE_REVIEWS = [
+  {
+    author: "Camile L.",
+    reviewBody:
+      "I was terrified of looking overdone or frozen. Dr. Vance built a conservative plan for my skin texture that made me look completely refreshed.",
+    ratingValue: 5,
+  },
+  {
+    author: "Elena R.",
+    reviewBody:
+      "The subtlety is what impressed me most. My colleagues noticed I looked rested and glowing, but no one could guess I had anything done.",
+    ratingValue: 5,
+  },
+  {
+    author: "Margaret T.",
+    reviewBody:
+      "Years of sun damage melted away. My skin tone is more even than it’s been in over a decade. I actually feel confident going out without foundation now.",
+    ratingValue: 5,
+  },
+  {
+    author: "Priya S.",
+    reviewBody:
+      "My skin was chronically dehydrated and dull. After just two sessions, people started asking what skincare product I was using. It’s literally glass-skin now.",
+    ratingValue: 5,
+  },
+];
+
 export default function ResultsPage() {
   return (
     <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <WebPageJsonLd
+        name="Clinical Outcomes & Results | Solène Aesthetic Medicine"
+        description="Authentic client outcomes and before & after transformations post Morpheus8, dermal fillers, and IPL photofacials."
+        url="/results"
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },
           { name: "Clinical Results", url: "/results" },
         ]}
       />
+      <ReviewJsonLd reviews={CASE_REVIEWS} />
 
       {/* Hero Banner */}
       <section className="relative w-full h-[100svh] min-h-[720px] max-h-[1080px] bg-[#1F221B] flex flex-col justify-between overflow-hidden">

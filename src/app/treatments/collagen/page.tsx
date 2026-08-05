@@ -1,7 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
-import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import {
+  MedicalProcedureJsonLd,
+  BreadcrumbJsonLd,
+  WebPageJsonLd,
+  FAQPageJsonLd,
+} from "@/components/seo/JsonLd";
 import facialsImg from "../../../../public/assets/Facials and Skin.png";
 
 export const metadata: Metadata = {
@@ -61,9 +66,27 @@ const BENEFITS = [
   "Visible Skin Texture & Firmness Improvement",
 ] as const;
 
+const FAQ_ITEMS = [
+  {
+    question: "How long does Morpheus8 downtime typically last?",
+    answer:
+      "Most clients experience mild redness and skin tightness for 2 to 3 days post-treatment. Makeup can be safely applied 48 hours post procedure.",
+  },
+  {
+    question: "How many collagen remodeling sessions are recommended?",
+    answer:
+      "We typically recommend a package of 3 sessions spaced 4 to 6 weeks apart for maximum structural collagen rebuilding and dermal firming.",
+  },
+];
+
 export default function CollagenPage() {
   return (
     <>
+      <WebPageJsonLd
+        name="Collagen & Texture Remodeling | Solène Studio"
+        description="Advanced RF microneedling and cellular matrix therapies engineered to rebuild deep dermal collagen."
+        url="/treatments/collagen"
+      />
       <MedicalProcedureJsonLd
         name="Morpheus8 RF Microneedling & Collagen Remodeling"
         description="Subdermal fractional radiofrequency energy combined with microneedling for collagen contraction and dermal rebuilding."
@@ -77,6 +100,7 @@ export default function CollagenPage() {
           { name: "Collagen & Texture", url: "/treatments/collagen" },
         ]}
       />
+      <FAQPageJsonLd mainEntity={FAQ_ITEMS} />
       <TreatmentCategoryTemplate
         kicker="PROCEDURE CATEGORY"
         title="Collagen & Dermal"

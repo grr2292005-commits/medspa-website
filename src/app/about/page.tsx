@@ -5,7 +5,7 @@ import { CorePillarsSection } from "@/components/sections/CorePillarsSection";
 import { SanctuaryGallerySection } from "@/components/sections/SanctuaryGallerySection";
 import { ClinicalDirectionSection } from "@/components/sections/ClinicalDirectionSection";
 import { FooterSection } from "@/components/sections/FooterSection";
-import { PhysicianJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { PhysicianJsonLd, BreadcrumbJsonLd, WebPageJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "About Us | Solène Aesthetic Medicine Studio Beverly Hills",
@@ -25,6 +25,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main id="main-content">
+      <WebPageJsonLd
+        name="About Us | Solène Aesthetic Medicine Studio"
+        description="Learn about our philosophy, core pillars, sanctuary space, and board-certified medical team."
+        url="/about"
+      />
       <PhysicianJsonLd />
       <BreadcrumbJsonLd
         items={[

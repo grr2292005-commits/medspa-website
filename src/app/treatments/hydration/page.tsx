@@ -1,7 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
-import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import {
+  MedicalProcedureJsonLd,
+  BreadcrumbJsonLd,
+  WebPageJsonLd,
+  FAQPageJsonLd,
+} from "@/components/seo/JsonLd";
 import bodyImg from "../../../../public/assets/Body and Wellness.png";
 
 export const metadata: Metadata = {
@@ -61,9 +66,27 @@ const BENEFITS = [
   "Immediate Radiant Glow with Zero Recovery Time",
 ] as const;
 
+const FAQ_ITEMS = [
+  {
+    question: "Is there any recovery downtime required for HydraFacial MD?",
+    answer:
+      "HydraFacial MD Platinum requires zero downtime. Clients step out of the treatment room with instant radiant hydration and clean pores.",
+  },
+  {
+    question: "How often should medical hydration facials be performed?",
+    answer:
+      "For optimal skin barrier maintenance and cellular turnover, we recommend scheduling a HydraFacial MD session every 4 weeks.",
+  },
+];
+
 export default function HydrationPage() {
   return (
     <>
+      <WebPageJsonLd
+        name="Medical Hydration & Skin Rehab | Solène Studio"
+        description="Clinical facials and exosome glow infusions engineered to restore deep lipid barrier health."
+        url="/treatments/hydration"
+      />
       <MedicalProcedureJsonLd
         name="HydraFacial MD & Exosome Hydration Therapy"
         description="Deep vortex extraction and nanoparticle exosome cellular infusion for instant hydration and skin barrier restoration."
@@ -77,6 +100,7 @@ export default function HydrationPage() {
           { name: "Hydration & Rehab", url: "/treatments/hydration" },
         ]}
       />
+      <FAQPageJsonLd mainEntity={FAQ_ITEMS} />
       <TreatmentCategoryTemplate
         kicker="PROCEDURE CATEGORY"
         title="Medical Hydration &"

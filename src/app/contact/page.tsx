@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { BookingForm } from "@/components/ui/BookingForm";
 import { FooterMinimal } from "@/components/sections/FooterMinimal";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/seo/JsonLd";
 import contactHeroImg from "../../../public/assets/contact_hero.png";
 
 export const metadata: Metadata = {
@@ -61,6 +61,11 @@ const CONTACT_DETAILS = [
 export default function ContactPage() {
   return (
     <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <WebPageJsonLd
+        name="Contact & Concierge | Solène Aesthetic Medicine"
+        description="Schedule your consultation at our Beverly Hills studio sanctuary."
+        url="/contact"
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },

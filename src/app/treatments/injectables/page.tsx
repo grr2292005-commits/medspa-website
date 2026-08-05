@@ -1,7 +1,12 @@
 import React from "react";
 import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
-import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import {
+  MedicalProcedureJsonLd,
+  BreadcrumbJsonLd,
+  WebPageJsonLd,
+  FAQPageJsonLd,
+} from "@/components/seo/JsonLd";
 import injectablesImg from "../../../../public/assets/Injectables.png";
 
 export const metadata: Metadata = {
@@ -61,9 +66,27 @@ const BENEFITS = [
   "Comprehensive Upfront Facial Mapping",
 ] as const;
 
+const FAQ_ITEMS = [
+  {
+    question: "Who administers injectable treatments at Solène?",
+    answer:
+      "Every injectable procedure at Solène is 100% administered or directly supervised by board-certified physicians specializing in aesthetic medicine.",
+  },
+  {
+    question: "How do you prevent an overfilled or unnatural appearance?",
+    answer:
+      "We utilize precise micro-dosing and micro-cannula placement techniques along deep periosteal structural planes, working conservatively to honor your natural facial features.",
+  },
+];
+
 export default function InjectablesPage() {
   return (
     <>
+      <WebPageJsonLd
+        name="Injectables & Facial Sculpting | Solène Studio"
+        description="Doctor-administered Botox, Xeomin, and hyaluronic acid dermal fillers designed for natural, subtle facial architecture."
+        url="/treatments/injectables"
+      />
       <MedicalProcedureJsonLd
         name="Neuromodulators & Dermal Filler Sculpting"
         description="Precision micro-dosed Botox, Xeomin, and hyaluronic acid fillers for subtle facial balancing."
@@ -77,6 +100,7 @@ export default function InjectablesPage() {
           { name: "Injectables", url: "/treatments/injectables" },
         ]}
       />
+      <FAQPageJsonLd mainEntity={FAQ_ITEMS} />
       <TreatmentCategoryTemplate
         kicker="PROCEDURE CATEGORY"
         title="Injectables & Facial"

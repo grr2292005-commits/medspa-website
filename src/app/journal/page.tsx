@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { JournalArticleList } from "@/components/sections/JournalArticleList";
 import { FooterSection } from "@/components/sections/FooterSection";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/seo/JsonLd";
 import journalHeroImg from "../../../public/assets/journal_hero.png";
 
 export const metadata: Metadata = {
@@ -26,6 +26,11 @@ export const metadata: Metadata = {
 export default function JournalPage() {
   return (
     <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <WebPageJsonLd
+        name="Aesthetic Medicine Journal | Solène Studio"
+        description="Physician-authored insights into facial anatomy, dermal remodeling, and skin barrier health."
+        url="/journal"
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },
