@@ -55,7 +55,7 @@ export const BookingForm: React.FC = () => {
           <button
             type="button"
             onClick={() => setSubmitted(false)}
-            className="mt-2 text-[14px] font-sans underline text-[#3C4233]"
+            className="mt-2 text-[14px] font-sans underline text-[#3C4233] cursor-pointer"
           >
             Book another session
           </button>
@@ -140,10 +140,10 @@ export const BookingForm: React.FC = () => {
                   <option value="laser">Laser & Light Therapy</option>
                   <option value="body">Body & Wellness</option>
                 </select>
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60">
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" aria-hidden="true">
                   <Image
                     src={downDirectorSvg}
-                    alt="select arrow"
+                    alt=""
                     width={14}
                     height={7}
                     className="w-[14px] h-[7px]"
@@ -168,10 +168,10 @@ export const BookingForm: React.FC = () => {
                   }
                   className="w-full h-[52px] px-5 pr-12 rounded-full border border-[#D5CDC1] bg-white text-[15px] font-sans text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#3C4233]/40 cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                 />
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60">
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" aria-hidden="true">
                   <Image
                     src={calendarSvg}
-                    alt="calendar icon"
+                    alt=""
                     width={20}
                     height={20}
                     className="w-[20px] h-[20px]"
@@ -203,10 +203,10 @@ export const BookingForm: React.FC = () => {
                   <option value="02:30 PM">02:30 PM</option>
                   <option value="04:30 PM">04:30 PM</option>
                 </select>
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60">
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" aria-hidden="true">
                   <Image
                     src={downDirectorSvg}
-                    alt="select arrow"
+                    alt=""
                     width={14}
                     height={7}
                     className="w-[14px] h-[7px]"
