@@ -43,7 +43,7 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
         </h3>
 
         {/* Role */}
-        <p className="font-sans font-normal text-[13px] sm:text-[14px] leading-[1.4] text-[#64748b]">
+        <p className="font-sans font-normal text-[13px] sm:text-[14px] leading-[1.4] text-[#526071]">
           {role}
         </p>
 
