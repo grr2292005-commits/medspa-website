@@ -42,8 +42,7 @@ export async function sendCustomerConfirmationEmail(
   params: SendCustomerConfirmationParams
 ) {
   const resend = getResendClient();
-  const fromEmail = "Solène Studio <onboarding@resend.dev>";
-  const adminRecipient = getAdminRecipient();
+  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping customer confirmation email.");
@@ -56,41 +55,22 @@ export async function sendCustomerConfirmationEmail(
       React.createElement(CustomerConfirmationEmail, params)
     );
 
-    let data = await resend.emails.send({
+    // Send confirmation email strictly to the client's submitted email address
+    const data = await resend.emails.send({
       from: fromEmail,
       to: params.email,
       subject: "Appointment Confirmed | Solène Aesthetic Medicine Studio",
       html,
     });
 
-    // Handle Resend testing sandbox restrictions (if client recipient email is unverified)
-    if (
-      data.error &&
-      (data.error.name === "validation_error" ||
-        data.error.statusCode === 422 ||
-        data.error.statusCode === 403 ||
-        data.error.message?.includes("testing") ||
-        data.error.message?.includes("domain"))
-    ) {
-      console.warn(
-        `[Resend Sandbox] Recipient ${params.email} is restricted by Resend free tier. Sending luxury HTML confirmation copy to ${adminRecipient}.`
-      );
-      data = await resend.emails.send({
-        from: fromEmail,
-        to: adminRecipient,
-        subject: `[Client Confirmation Copy for ${params.fullName}] Solène Studio`,
-        html,
-      });
-    }
-
     if (data.error) {
-      console.error("[Resend API Error] Customer Email:", data.error);
+      console.error(`[Resend API Error] Customer Email to (${params.email}):`, data.error);
       return { success: false, error: data.error.message };
     }
 
     return { success: true, data };
   } catch (error) {
-    console.error("Failed to send customer confirmation email:", error);
+    console.error(`Failed to send customer confirmation email to (${params.email}):`, error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown email error",
@@ -102,7 +82,7 @@ export async function sendClinicNotificationEmail(
   params: SendClinicNotificationParams
 ) {
   const resend = getResendClient();
-  const fromEmail = "Solène Studio <onboarding@resend.dev>";
+  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
   const adminRecipient = getAdminRecipient();
 
   if (!resend) {
@@ -116,34 +96,21 @@ export async function sendClinicNotificationEmail(
       React.createElement(ClinicNotificationEmail, params)
     );
 
-    let data = await resend.emails.send({
+    const data = await resend.emails.send({
       from: fromEmail,
       to: adminRecipient,
       subject: `New Booking Alert: ${params.fullName} - ${params.treatment}`,
       html,
     });
 
-    // Fallback if adminRecipient was rejected by sandbox
-    if (
-      data.error &&
-      (data.error.statusCode === 403 || data.error.statusCode === 422)
-    ) {
-      data = await resend.emails.send({
-        from: fromEmail,
-        to: "grr2292005@gmail.com",
-        subject: `New Booking Alert: ${params.fullName} - ${params.treatment}`,
-        html,
-      });
-    }
-
     if (data.error) {
-      console.error("[Resend API Error] Clinic Notification Email:", data.error);
+      console.error(`[Resend API Error] Clinic Notification Email to (${adminRecipient}):`, data.error);
       return { success: false, error: data.error.message };
     }
 
     return { success: true, data };
   } catch (error) {
-    console.error("Failed to send clinic notification email:", error);
+    console.error(`Failed to send clinic notification email to (${adminRecipient}):`, error);
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown email error",
