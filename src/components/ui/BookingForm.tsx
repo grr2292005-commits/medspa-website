@@ -18,10 +18,57 @@ export const BookingForm: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setErrorMessage(null);
+    setFieldErrors({});
+
+    try {
+      const response = await fetch("/api/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => null);
+        setErrorMessage(
+          errData?.error || "Unable to reserve your session. Please check your inputs."
+        );
+        if (errData?.details) {
+          setFieldErrors(errData.details);
+        }
+        return;
+      }
+
+      const resData = await response.json();
+
+      if (resData?.success) {
+        setSubmitted(true);
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          treatment: "",
+          date: "",
+          time: "",
+        });
+      }
+    } catch (err) {
+      console.error("Form Submission Network Error:", err);
+      setErrorMessage(
+        "A network error occurred. Please check your connection and try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +87,12 @@ export const BookingForm: React.FC = () => {
       </div>
 
       <hr className="border-t border-[#E8DFD1]/80 mb-7" />
+
+      {errorMessage && (
+        <div className="mb-6 p-4 rounded-[14px] bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-[14px] font-sans">
+          <p className="font-semibold">{errorMessage}</p>
+        </div>
+      )}
 
       {submitted ? (
         <div className="py-10 text-center flex flex-col items-center justify-center gap-3">
@@ -80,6 +133,11 @@ export const BookingForm: React.FC = () => {
                 }
                 className="w-full h-[52px] px-5 rounded-full border border-[#D5CDC1] bg-white text-[15px] font-sans text-[#1C1C1C] placeholder:text-[#9A9286] focus:outline-none focus:ring-2 focus:ring-[#3C4233]/40"
               />
+              {fieldErrors.fullName && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.fullName[0]}
+                </span>
+              )}
             </div>
 
             {/* Email Address */}
@@ -99,6 +157,11 @@ export const BookingForm: React.FC = () => {
                 }
                 className="w-full h-[52px] px-5 rounded-full border border-[#D5CDC1] bg-white text-[15px] font-sans text-[#1C1C1C] placeholder:text-[#9A9286] focus:outline-none focus:ring-2 focus:ring-[#3C4233]/40"
               />
+              {fieldErrors.email && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.email[0]}
+                </span>
+              )}
             </div>
 
             {/* Phone Number */}
@@ -118,6 +181,11 @@ export const BookingForm: React.FC = () => {
                 }
                 className="w-full h-[52px] px-5 rounded-full border border-[#D5CDC1] bg-white text-[15px] font-sans text-[#1C1C1C] placeholder:text-[#9A9286] focus:outline-none focus:ring-2 focus:ring-[#3C4233]/40"
               />
+              {fieldErrors.phone && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.phone[0]}
+                </span>
+              )}
             </div>
 
             {/* Treatment Type */}
@@ -138,10 +206,10 @@ export const BookingForm: React.FC = () => {
                   <option value="" disabled>
                     Select Treatment
                   </option>
-                  <option value="injectables">Injectables & Sculpting</option>
-                  <option value="facials">Facials & Skin Rehab</option>
-                  <option value="laser">Laser & Light Therapy</option>
-                  <option value="body">Body & Wellness</option>
+                  <option value="Injectables & Sculpting">Injectables & Sculpting</option>
+                  <option value="Facials & Skin Rehab">Facials & Skin Rehab</option>
+                  <option value="Laser & Light Therapy">Laser & Light Therapy</option>
+                  <option value="Body & Wellness">Body & Wellness</option>
                 </select>
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-60" aria-hidden="true">
                   <Image
@@ -153,6 +221,11 @@ export const BookingForm: React.FC = () => {
                   />
                 </div>
               </div>
+              {fieldErrors.treatment && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.treatment[0]}
+                </span>
+              )}
             </div>
 
             {/* Date Picker */}
@@ -181,6 +254,11 @@ export const BookingForm: React.FC = () => {
                   />
                 </div>
               </div>
+              {fieldErrors.date && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.date[0]}
+                </span>
+              )}
             </div>
 
             {/* Time Selector */}
@@ -216,6 +294,11 @@ export const BookingForm: React.FC = () => {
                   />
                 </div>
               </div>
+              {fieldErrors.time && (
+                <span className="text-[12px] text-[#DC2626] px-2 font-sans">
+                  {fieldErrors.time[0]}
+                </span>
+              )}
             </div>
           </div>
 
@@ -223,9 +306,17 @@ export const BookingForm: React.FC = () => {
           <div className="pt-2 flex flex-col gap-2.5">
             <button
               type="submit"
-              className="bg-[#3C4233] hover:bg-[#2D3227] text-white rounded-[66px] px-9 h-[52px] font-sans font-medium text-[16px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233] cursor-pointer shadow-md w-full sm:w-auto"
+              disabled={loading}
+              className="bg-[#3C4233] hover:bg-[#2D3227] disabled:opacity-60 text-white rounded-[66px] px-9 h-[52px] font-sans font-medium text-[16px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233] cursor-pointer shadow-md w-full sm:w-auto flex items-center justify-center gap-2"
             >
-              {t("booking_btn")}
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                  <span>Processing...</span>
+                </>
+              ) : (
+                t("booking_btn")
+              )}
             </button>
             <p className="font-sans text-[12px] text-[#526071] flex items-center gap-1.5 pt-0.5">
               <span>{t("booking_guarantee")}</span>
