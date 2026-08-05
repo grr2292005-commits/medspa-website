@@ -9,6 +9,14 @@ const getResendClient = () => {
   return apiKey ? new Resend(apiKey) : null;
 };
 
+const getAdminRecipient = () => {
+  const envAdmin = process.env.ADMIN_EMAIL;
+  if (envAdmin && !envAdmin.includes("solene.com") && !envAdmin.includes("example.com")) {
+    return envAdmin;
+  }
+  return "grr2292005@gmail.com";
+};
+
 interface SendCustomerConfirmationParams {
   fullName: string;
   email: string;
@@ -35,6 +43,7 @@ export async function sendCustomerConfirmationEmail(
 ) {
   const resend = getResendClient();
   const fromEmail = "Solène Studio <onboarding@resend.dev>";
+  const adminRecipient = getAdminRecipient();
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping customer confirmation email.");
@@ -60,14 +69,15 @@ export async function sendCustomerConfirmationEmail(
       (data.error.name === "validation_error" ||
         data.error.statusCode === 422 ||
         data.error.statusCode === 403 ||
-        data.error.message?.includes("testing"))
+        data.error.message?.includes("testing") ||
+        data.error.message?.includes("domain"))
     ) {
       console.warn(
-        `[Resend Sandbox] Recipient ${params.email} is restricted. Sending luxury HTML confirmation copy to registered owner inbox.`
+        `[Resend Sandbox] Recipient ${params.email} is restricted by Resend free tier. Sending luxury HTML confirmation copy to ${adminRecipient}.`
       );
       data = await resend.emails.send({
         from: fromEmail,
-        to: "rameswar.builds@gmail.com",
+        to: adminRecipient,
         subject: `[Client Confirmation Copy for ${params.fullName}] Solène Studio`,
         html,
       });
@@ -93,12 +103,7 @@ export async function sendClinicNotificationEmail(
 ) {
   const resend = getResendClient();
   const fromEmail = "Solène Studio <onboarding@resend.dev>";
-  
-  // Clean recipient: Ensure fake emails like hello@solene.com don't trigger Resend 403 sandbox errors
-  let adminRecipient = process.env.ADMIN_EMAIL || "rameswar.builds@gmail.com";
-  if (adminRecipient.includes("solene.com") || adminRecipient.includes("example.com")) {
-    adminRecipient = "rameswar.builds@gmail.com";
-  }
+  const adminRecipient = getAdminRecipient();
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping clinic notification email.");
@@ -119,10 +124,13 @@ export async function sendClinicNotificationEmail(
     });
 
     // Fallback if adminRecipient was rejected by sandbox
-    if (data.error && (data.error.statusCode === 403 || data.error.statusCode === 422)) {
+    if (
+      data.error &&
+      (data.error.statusCode === 403 || data.error.statusCode === 422)
+    ) {
       data = await resend.emails.send({
         from: fromEmail,
-        to: "rameswar.builds@gmail.com",
+        to: "grr2292005@gmail.com",
         subject: `New Booking Alert: ${params.fullName} - ${params.treatment}`,
         html,
       });
