@@ -6,13 +6,7 @@ import ClinicNotificationEmail from "@/emails/ClinicNotification";
 
 const getResendClient = () => {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.warn(
-      "[Resend Email] Missing RESEND_API_KEY environment variable."
-    );
-    return null;
-  }
-  return new Resend(apiKey);
+  return apiKey ? new Resend(apiKey) : null;
 };
 
 interface SendCustomerConfirmationParams {
@@ -40,8 +34,12 @@ export async function sendCustomerConfirmationEmail(
   params: SendCustomerConfirmationParams
 ) {
   const resend = getResendClient();
-  const fromEmail =
-    process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
+  
+  // Resend requires onboarding@resend.dev UNLESS a custom domain (non-gmail) is verified on resend.com/domains
+  let fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
+  if (fromEmail.includes("@gmail.com")) {
+    fromEmail = "Solène Studio <onboarding@resend.dev>";
+  }
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping customer confirmation email.");
@@ -53,12 +51,26 @@ export async function sendCustomerConfirmationEmail(
       React.createElement(CustomerConfirmationEmail, params)
     );
 
-    const data = await resend.emails.send({
+    let data = await resend.emails.send({
       from: fromEmail,
       to: params.email,
       subject: "Appointment Confirmed | Solène Aesthetic Medicine Studio",
       html,
     });
+
+    // Handle Resend Onboarding restrictions (unverified recipient emails during testing)
+    if (data.error && (data.error.name === "validation_error" || data.error.statusCode === 422)) {
+      console.warn(
+        `[Resend Onboarding Mode] Recipient ${params.email} is restricted. Redirecting test email to registered owner address.`
+      );
+      const fallbackRecipient = process.env.ADMIN_EMAIL || "rameswar.builds@gmail.com";
+      data = await resend.emails.send({
+        from: fromEmail,
+        to: fallbackRecipient,
+        subject: `[Test Copy for ${params.fullName}] Appointment Confirmed | Solène Studio`,
+        html,
+      });
+    }
 
     if (data.error) {
       console.error("Resend Customer Email Error:", data.error);
@@ -79,9 +91,13 @@ export async function sendClinicNotificationEmail(
   params: SendClinicNotificationParams
 ) {
   const resend = getResendClient();
-  const fromEmail =
-    process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
-  const adminEmail = process.env.ADMIN_EMAIL || "hello@solene.com";
+
+  let fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
+  if (fromEmail.includes("@gmail.com")) {
+    fromEmail = "Solène Studio <onboarding@resend.dev>";
+  }
+  
+  const adminEmail = process.env.ADMIN_EMAIL || "rameswar.builds@gmail.com";
 
   if (!resend) {
     console.warn("Resend API Key is missing. Skipping clinic notification email.");
