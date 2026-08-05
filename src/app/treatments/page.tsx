@@ -1,17 +1,31 @@
-"use client";
-
 import React from "react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { FooterSection } from "@/components/sections/FooterSection";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import injectablesImg from "../../../public/assets/Injectables.png";
 import facialsImg from "../../../public/assets/Facials and Skin.png";
 import laserImg from "../../../public/assets/Laser and Light.png";
 import bodyImg from "../../../public/assets/Body and Wellness.png";
 import bedAreaImg from "../../../public/assets/Bed Area.png";
+
+export const metadata: Metadata = {
+  title: "Treatments & Clinical Protocols | Solène Aesthetic Medicine Beverly Hills",
+  description:
+    "Explore our complete medical menu: Morpheus8 RF microneedling, physician dermal fillers, Lumecca IPL photofacials, and HydraFacial MD.",
+  alternates: {
+    canonical: "https://solenestudio.com/treatments",
+  },
+  openGraph: {
+    title: "Treatments & Clinical Protocols | Solène Aesthetic Medicine",
+    description:
+      "Explore our doctor-led menu: Morpheus8, dermal fillers, Lumecca IPL, and HydraFacial MD.",
+    url: "https://solenestudio.com/treatments",
+  },
+};
 
 const TREATMENT_CATEGORIES = [
   {
@@ -46,7 +60,14 @@ const TREATMENT_CATEGORIES = [
 
 export default function TreatmentsPage() {
   return (
-    <main className="bg-[#FAF7F2] min-h-screen">
+    <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Treatments", url: "/treatments" },
+        ]}
+      />
+
       {/* Hero Banner */}
       <section className="relative w-full h-[100svh] min-h-[720px] max-h-[1080px] bg-[#1F221B] flex flex-col justify-between overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
@@ -72,12 +93,7 @@ export default function TreatmentsPage() {
         <Navbar />
 
         <div className="relative z-30 mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px] pt-[140px] pb-[80px] flex-1 flex flex-col items-center justify-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-[820px] flex flex-col items-center gap-6"
-          >
+          <div className="max-w-[820px] flex flex-col items-center gap-6">
             <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-white/80">
               OUR TREATMENT MENU
             </span>
@@ -94,20 +110,16 @@ export default function TreatmentsPage() {
             <div className="pt-3">
               <PrimaryButton href="#menu">Explore Procedures</PrimaryButton>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Treatment Categories Grid */}
       <section className="py-[80px] sm:py-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]" id="menu">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
-          {TREATMENT_CATEGORIES.map((cat, idx) => (
-            <motion.div
+          {TREATMENT_CATEGORIES.map((cat) => (
+            <div
               key={cat.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
               className="bg-[#F5EFE6] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-[#E8DFD1]/60 shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
             >
               <div className="relative h-[280px] w-full overflow-hidden">
@@ -151,7 +163,7 @@ export default function TreatmentsPage() {
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>

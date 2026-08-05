@@ -1,13 +1,27 @@
-"use client";
-
 import React from "react";
+import { Metadata } from "next";
 import Image from "next/image";
-import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { BookingForm } from "@/components/ui/BookingForm";
 import { FooterMinimal } from "@/components/sections/FooterMinimal";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import contactHeroImg from "../../../public/assets/contact_hero.png";
+
+export const metadata: Metadata = {
+  title: "Contact & Concierge | Solène Aesthetic Medicine Beverly Hills",
+  description:
+    "Connect with our concierge team to schedule your consultation at our Beverly Hills studio sanctuary.",
+  alternates: {
+    canonical: "https://solenestudio.com/contact",
+  },
+  openGraph: {
+    title: "Contact & Concierge | Solène Aesthetic Medicine Beverly Hills",
+    description:
+      "Schedule your consultation at our Beverly Hills studio sanctuary.",
+    url: "https://solenestudio.com/contact",
+  },
+};
 
 const CONTACT_DETAILS = [
   {
@@ -46,7 +60,14 @@ const CONTACT_DETAILS = [
 
 export default function ContactPage() {
   return (
-    <main className="bg-[#FAF7F2] min-h-screen">
+    <main className="bg-[#FAF7F2] min-h-screen" id="main-content">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Contact", url: "/contact" },
+        ]}
+      />
+
       {/* Hero Banner */}
       <section className="relative w-full h-[100svh] min-h-[720px] max-h-[1080px] bg-[#1F221B] flex flex-col justify-between overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
@@ -66,12 +87,7 @@ export default function ContactPage() {
         <Navbar />
 
         <div className="relative z-30 mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px] pt-[140px] pb-[80px] flex-1 flex flex-col items-center justify-center text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-[820px] flex flex-col items-center gap-6"
-          >
+          <div className="max-w-[820px] flex flex-col items-center gap-6">
             <span className="block font-sans text-[12px] font-semibold tracking-[0.14em] uppercase text-white/80">
               BEVERLY HILLS STUDIO
             </span>
@@ -88,20 +104,16 @@ export default function ContactPage() {
             <div className="pt-3">
               <PrimaryButton href="#reserve">Reserve Appointment</PrimaryButton>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Contact Cards Grid */}
       <section className="py-[80px] sm:py-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {CONTACT_DETAILS.map((item, idx) => (
-            <motion.div
+          {CONTACT_DETAILS.map((item) => (
+            <div
               key={item.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
               className="bg-[#FFFFFF] rounded-[24px] p-8 shadow-sm border border-[#E8DFD1]/60 flex flex-col gap-4 hover:shadow-md transition-shadow"
             >
               <div className="w-12 h-12 rounded-full bg-[#FAF7F2] border border-[#E8DFD1] text-[#3C4233] flex items-center justify-center">
@@ -110,9 +122,9 @@ export default function ContactPage() {
               <div>
                 <h2 className="font-serif font-medium text-[20px] text-[#1C1C1C]">{item.title}</h2>
                 <p className="font-sans font-medium text-[15px] text-[#1C1C1C] mt-1">{item.value}</p>
-                <p className="font-sans text-[14px] text-[#64748b]">{item.sub}</p>
+                <p className="font-sans text-[14px] text-[#526071]">{item.sub}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -122,7 +134,6 @@ export default function ContactPage() {
         <BookingForm />
       </section>
 
-      {/* Footer without booking form */}
       <FooterMinimal />
     </main>
   );

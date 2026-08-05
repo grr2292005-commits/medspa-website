@@ -1,11 +1,22 @@
 import React from "react";
+import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
+import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import bodyImg from "../../../../public/assets/Body and Wellness.png";
 
-export const metadata = {
-  title: "Medical Hydration & Skin Rehab | Solène Aesthetic Medicine",
+export const metadata: Metadata = {
+  title: "Medical Hydration & Skin Rehab | Solène Aesthetic Medicine Beverly Hills",
   description:
-    "Restorative clinical facials, exosome infusion, and chemical peels engineered to repair skin barrier integrity.",
+    "Clinical facials, exosome glow infusions, and vortex extraction engineered to restore deep lipid barrier health and cellular hydration.",
+  alternates: {
+    canonical: "https://solenestudio.com/treatments/hydration",
+  },
+  openGraph: {
+    title: "Medical Hydration & Skin Rehab | Solène Studio",
+    description:
+      "Clinical facials and exosome glow infusions engineered to restore deep lipid barrier health.",
+    url: "https://solenestudio.com/treatments/hydration",
+  },
 };
 
 const TREATMENTS = [
@@ -15,31 +26,31 @@ const TREATMENTS = [
     downtime: "Zero downtime (Instant glow)",
     idealFor: "Congested pores, dehydration, uneven texture, dullness",
     description:
-      "Vortex-fusion technology that deep cleanses, extracts impurities, and saturates the skin with antioxidants, peptides, and hyaluronic acid.",
+      "Vortex-fusion technology that deep cleanses, extracts impurities, and saturates the skin with antioxidants and hyaluronic acid.",
   },
   {
-    name: "Exosome Cellular Infusion",
+    name: "Exosome Cellular Glow Therapy",
     duration: "45 Min",
     downtime: "Zero downtime",
-    idealFor: "Compromised skin barrier, redness, post-procedure healing",
+    idealFor: "Post-laser healing, severe dryness, compromised skin barrier",
     description:
-      "Billion mRNA and lipid nanoparticles infused into the skin to calm inflammation, accelerate repair, and restore glass-skin hydration.",
+      "Nanoparticle exosome infusions rich in growth factors and mRNA signals to accelerate cellular repair and achieve glass-skin glow.",
   },
   {
     name: "Medical Grade Chemical Peels",
     duration: "30 Min",
-    downtime: "2-4 days mild flaking",
-    idealFor: "Cellular turnover, dull tone, superficial pigmentation",
+    downtime: "2-5 days mild flaking",
+    idealFor: "Hyperpigmentation, fine lines, acne scarring, dull tone",
     description:
-      "Custom blends of TCA, glycolic, and lactic acids tailored to dissolve dead surface skin cells and reveal fresh, radiant tissue.",
+      "Customized blend of TCA, glycolic, and salicylic acids formulated to gently slough dead cells and reveal radiant new skin.",
   },
   {
-    name: "Lipid Barrier Repair Facial",
-    duration: "60 Min",
+    name: "Barrier Repair & Soothing Protocol",
+    duration: "50 Min",
     downtime: "Zero downtime",
-    idealFor: "Dry, reactive skin, compromised moisture barrier",
+    idealFor: "Rosacea, inflamed skin, sensitive dermal barrier",
     description:
-      "Soothes sensitive, overworked skin using ceramide complexes, soothing botanical extracts, and LED red light phototherapy.",
+      "Biomimetic ceramide and lipid infusion combined with cooling LED light therapy to calm redness and rebuild dermal defense.",
   },
 ] as const;
 
@@ -52,16 +63,31 @@ const BENEFITS = [
 
 export default function HydrationPage() {
   return (
-    <TreatmentCategoryTemplate
-      kicker="PROCEDURE CATEGORY"
-      title="Medical Hydration &"
-      italicWord="Skin Rehab"
-      subtitle="Clinical grade hydration therapies designed to soothe reactive skin, repair moisture barriers, and restore glass-skin radiance."
-      heroImage={bodyImg}
-      overviewHeading="Barrier Repair & Deep Cellular Moisture"
-      overviewDescription="Environmental factors and harsh active ingredients can compromise your skin's natural lipid barrier. Our clinical hydration protocols combine mechanical extraction, antioxidant infusion, and exosome cellular signals to restore deep moisture, calm inflammation, and impart a healthy, dewy glow."
-      treatmentsList={TREATMENTS}
-      benefits={BENEFITS}
-    />
+    <>
+      <MedicalProcedureJsonLd
+        name="HydraFacial MD & Exosome Hydration Therapy"
+        description="Deep vortex extraction and nanoparticle exosome cellular infusion for instant hydration and skin barrier restoration."
+        bodyLocation="Face, Neck"
+        procedureType="Clinical Facial / Medical Hydration"
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Treatments", url: "/treatments" },
+          { name: "Hydration & Rehab", url: "/treatments/hydration" },
+        ]}
+      />
+      <TreatmentCategoryTemplate
+        kicker="PROCEDURE CATEGORY"
+        title="Medical Hydration &"
+        italicWord="Skin Rehab"
+        subtitle="Restorative clinical facials and exosome infusions formulated to revive compromised skin barriers and deliver lasting glow."
+        heroImage={bodyImg}
+        overviewHeading="Saturating the Dermal Layer with Essential Nutrients"
+        overviewDescription="True glow cannot be achieved on dehydrated or inflamed skin. Our hydration protocols combine vortex-fusion extraction with clinical-grade nanoparticle exosomes and ceramides to repair your skin barrier and unlock luminous, glass-skin clarity."
+        treatmentsList={TREATMENTS}
+        benefits={BENEFITS}
+      />
+    </>
   );
 }

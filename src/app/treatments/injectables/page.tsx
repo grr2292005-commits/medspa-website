@@ -1,11 +1,22 @@
 import React from "react";
+import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
+import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import injectablesImg from "../../../../public/assets/Injectables.png";
 
-export const metadata = {
-  title: "Injectables & Facial Sculpting | Solène Aesthetic Medicine",
+export const metadata: Metadata = {
+  title: "Injectables & Facial Sculpting | Solène Aesthetic Medicine Beverly Hills",
   description:
-    "Board-certified physician administered neuromodulators and dermal fillers designed to refine facial architecture without over-filling.",
+    "Doctor-administered Botox, Xeomin, and hyaluronic acid dermal fillers designed for natural, subtle facial architecture.",
+  alternates: {
+    canonical: "https://solenestudio.com/treatments/injectables",
+  },
+  openGraph: {
+    title: "Injectables & Facial Sculpting | Solène Studio",
+    description:
+      "Doctor-administered Botox, Xeomin, and hyaluronic acid dermal fillers designed for natural, subtle facial architecture.",
+    url: "https://solenestudio.com/treatments/injectables",
+  },
 };
 
 const TREATMENTS = [
@@ -15,31 +26,31 @@ const TREATMENTS = [
     downtime: "Zero downtime",
     idealFor: "Forehead lines, crow's feet, brow elevation, jawline slimming",
     description:
-      "Micro-dosed Botox or Xeomin precisely targeted to soften dynamic muscle lines while preserving full natural facial expressions.",
+      "Micro-dosed Botox or Xeomin precisely targeted to soften dynamic muscle lines while preserving full, authentic facial expression.",
   },
   {
-    name: "Hyaluronic Dermal Sculpting",
+    name: "Facial Architecture Dermal Fillers",
     duration: "45 Min",
-    downtime: "Mild swelling (24-48 hrs)",
-    idealFor: "Cheek architecture, tear trough support, chin projection",
+    downtime: "1-2 days mild swelling",
+    idealFor: "Cheek elevation, jawline definition, chin projection, tear troughs",
     description:
-      "Ultra-smooth hyaluronic acid gels injected with micro-cannulas to restore structural volume loss with smooth, touchable contouring.",
+      "Premium hyaluronic acid gels placed along deep structural periosteal planes to restore youthful contours without over-filling.",
   },
   {
-    name: "Sculptra Biostimulator",
+    name: "Subtle Lip Architecture",
     duration: "45 Min",
-    downtime: "Minimal (Resume normal activity)",
-    idealFor: "Overall deep collagen loss, mid-face hollows, skin density",
+    downtime: "2-3 days mild swelling",
+    idealFor: "Lip asymmetry, hydration loss, subtle volume enhancement",
     description:
-      "Poly-L-lactic acid micro-particles that stimulate your skin's innate collagen factory for gradual, long-lasting facial rejuvenation.",
+      "Micro-cannula technique creating soft, hydrated lip contours that complement your individual facial proportions.",
   },
   {
-    name: "Lip Architecture & Hydration",
-    duration: "40 Min",
-    downtime: "Mild swelling (1-3 days)",
-    idealFor: "Lip border crispness, hydration restoration, subtle symmetry",
+    name: "Sculptra Biostimulatory Sculpting",
+    duration: "45 Min",
+    downtime: "Minimal (Resume daily activities immediately)",
+    idealFor: "Hollow temples, mid-face volume loss, overall structural collagen",
     description:
-      "Customized lip enhancement tailored to your natural lip shape. Focuses on deep moisture, crisp vermilion borders, and balanced volume.",
+      "Poly-L-lactic acid micro-particles that stimulate your own body to produce new Type-I collagen over 3 to 6 months.",
   },
 ] as const;
 
@@ -52,16 +63,31 @@ const BENEFITS = [
 
 export default function InjectablesPage() {
   return (
-    <TreatmentCategoryTemplate
-      kicker="PROCEDURE CATEGORY"
-      title="Injectables & Facial"
-      italicWord="Sculpting"
-      subtitle="Board-certified medical precision designed to honor your natural architecture and balance facial proportions."
-      heroImage={injectablesImg}
-      overviewHeading="Authentic Facial Enhancement Over Aggressive Volume"
-      overviewDescription="At Solène, injectable therapies are approached through an architectural lens. We analyze dynamic muscle movements, bone structure, and facial fat pads before recommending any product. Our goal is never to change how you look, but to restore youthfulness and subtle symmetry."
-      treatmentsList={TREATMENTS}
-      benefits={BENEFITS}
-    />
+    <>
+      <MedicalProcedureJsonLd
+        name="Neuromodulators & Dermal Filler Sculpting"
+        description="Precision micro-dosed Botox, Xeomin, and hyaluronic acid fillers for subtle facial balancing."
+        bodyLocation="Face, Lips, Jawline"
+        procedureType="Injectable Medical Procedure"
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Treatments", url: "/treatments" },
+          { name: "Injectables", url: "/treatments/injectables" },
+        ]}
+      />
+      <TreatmentCategoryTemplate
+        kicker="PROCEDURE CATEGORY"
+        title="Injectables & Facial"
+        italicWord="Sculpting"
+        subtitle="Conservative, doctor-administered injectable therapies designed to honor your natural facial architecture."
+        heroImage={injectablesImg}
+        overviewHeading="Conservative Adjustments for Effortless Balance"
+        overviewDescription="We believe injectable treatments should enhance your natural bone structure, not replace it. Our board-certified physicians use micro-dosing and cannula delivery methods to restore volume loss, soften expression lines, and bring harmony to your facial features."
+        treatmentsList={TREATMENTS}
+        benefits={BENEFITS}
+      />
+    </>
   );
 }

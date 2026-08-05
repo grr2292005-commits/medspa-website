@@ -161,7 +161,7 @@ export const FooterMinimal: React.FC = () => {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-[48px] mt-[48px] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-[12px] text-white/40">
+        <div className="pt-[48px] mt-[48px] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-[12px] text-white/60">
           <p>© {new Date().getFullYear()} Solène Studio. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white/70 transition-colors">Privacy Policy</a>

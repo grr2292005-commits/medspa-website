@@ -1,11 +1,22 @@
 import React from "react";
+import { Metadata } from "next";
 import { TreatmentCategoryTemplate } from "@/components/templates/TreatmentCategoryTemplate";
+import { MedicalProcedureJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import laserImg from "../../../../public/assets/Laser and Light.png";
 
-export const metadata = {
-  title: "Laser & Photofacials | Solène Aesthetic Medicine",
+export const metadata: Metadata = {
+  title: "Laser & Photofacials | Solène Aesthetic Medicine Beverly Hills",
   description:
-    "Targeted light energy protocols for hyperpigmentation, sun damage, vascular redness, and fractional skin resurfacing.",
+    "Lumecca IPL photofacials and fractional laser resurfacing for sun damage clearance, vascular redness, and collagen rebuilding.",
+  alternates: {
+    canonical: "https://solenestudio.com/treatments/laser",
+  },
+  openGraph: {
+    title: "Laser & Photofacials | Solène Studio",
+    description:
+      "Lumecca IPL photofacials and fractional laser resurfacing for sun damage clearance and vascular redness.",
+    url: "https://solenestudio.com/treatments/laser",
+  },
 };
 
 const TREATMENTS = [
@@ -15,31 +26,31 @@ const TREATMENTS = [
     downtime: "Mild darkening of spots (3-5 days)",
     idealFor: "Sun spots, age spots, rosacea, vascular redness",
     description:
-      "High-peak power intense pulsed light targeted at hemoglobin and melanin to clarify stubborn pigment spots and diffuse facial redness.",
+      "High-peak power intense pulsed light targeted at hemoglobin and melanin to clarify pigment and reduce facial redness.",
   },
   {
-    name: "Clear & Brilliant Resurfacing",
+    name: "Clear & Brilliant Laser Resurfacing",
     duration: "45 Min",
-    downtime: "1-2 days sandpaper texture",
-    idealFor: "Pore refining, early signs of aging, tone uniformity",
+    downtime: "1-2 days mild sandpaper texture",
+    idealFor: "Early signs of aging, enlarged pores, dull skin tone",
     description:
-      "Gentle fractional laser technology that creates millions of microscopic treatment zones, replacing damaged skin with clear, radiant tissue.",
+      "Gentle fractional laser energy that creates millions of microscopic treatment zones to refresh skin from the inside out.",
   },
   {
-    name: "Vascular Redness Eraser",
-    duration: "30 Min",
-    downtime: "Mild pinkness (24 hrs)",
-    idealFor: "Broken capillaries, spider veins, cherry angiomas",
+    name: "Vascular & Rosacea Laser Toning",
+    duration: "40 Min",
+    downtime: "Minimal (Transient pinkness 2-4 hrs)",
+    idealFor: "Broken capillaries, diffuses facial redness, spider veins",
     description:
-      "Targeted laser wavelength absorbed by dilated vessels, causing gentle coagulation and natural clearance by the body's lymphatic system.",
+      "Targeted laser wavelengths that coagulate visible facial vessels without disrupting surrounding dermal tissue.",
   },
   {
-    name: "Melasma & Pigment Protocol",
+    name: "Medical Hyperpigmentation Eraser",
     duration: "50 Min",
-    downtime: "Zero downtime",
-    idealFor: "Hormonal melasma, post-inflammatory hyperpigmentation",
+    downtime: "1-3 days mild redness",
+    idealFor: "Melasma, post-inflammatory hyperpigmentation, stubborn sun spots",
     description:
-      "Low-fluence q-switched laser toning paired with medical pigment inhibitors to break down deep melanin without thermal rebound risks.",
+      "Dual-wavelength laser protocol combined with topical tyrosinase inhibitors for deep, safe pigment dissolution.",
   },
 ] as const;
 
@@ -52,16 +63,31 @@ const BENEFITS = [
 
 export default function LaserPage() {
   return (
-    <TreatmentCategoryTemplate
-      kicker="PROCEDURE CATEGORY"
-      title="Laser & Light"
-      italicWord="Clarity"
-      subtitle="Precision light energy therapies formulated to dissolve hyperpigmentation, clear redness, and unify skin tone."
-      heroImage={laserImg}
-      overviewHeading="Targeted Wavelengths for Luminous Skin Clarity"
-      overviewDescription="Sun exposure and environmental stressors break down skin tone over time. Our laser and photofacial therapies deliver targeted optical energy to destroy brown spots and broken capillaries while boosting dermal radiance without damaging the surrounding epidermis."
-      treatmentsList={TREATMENTS}
-      benefits={BENEFITS}
-    />
+    <>
+      <MedicalProcedureJsonLd
+        name="Lumecca IPL & Laser Photofacial Therapy"
+        description="High-peak power intense pulsed light and fractional laser resurfacing for sun damage and skin tone clarification."
+        bodyLocation="Face, Neck, Hands"
+        procedureType="Laser / IPL Energy Therapy"
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Treatments", url: "/treatments" },
+          { name: "Laser & Photofacials", url: "/treatments/laser" },
+        ]}
+      />
+      <TreatmentCategoryTemplate
+        kicker="PROCEDURE CATEGORY"
+        title="Laser & Light"
+        italicWord="Therapies"
+        subtitle="Medical grade light and optical energy therapies targeted at clearing sun damage, redness, and uneven skin tone."
+        heroImage={laserImg}
+        overviewHeading="Precision Wavelengths for Luminous Skin Tone"
+        overviewDescription="Sun exposure, environmental stress, and vascular changes leave uneven pigment and diffuse redness over time. Our advanced laser and IPL technologies deliver specific light wavelengths directly into targeted chromophores, safely breaking down excess melanin and broken capillaries."
+        treatmentsList={TREATMENTS}
+        benefits={BENEFITS}
+      />
+    </>
   );
 }
