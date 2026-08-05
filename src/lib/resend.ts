@@ -9,6 +9,10 @@ const getResendClient = () => {
   return apiKey ? new Resend(apiKey) : null;
 };
 
+const getBrevoKey = () => {
+  return process.env.BREVO_API_KEY;
+};
+
 const getAdminRecipient = () => {
   const envAdmin = process.env.ADMIN_EMAIL;
   if (envAdmin && !envAdmin.includes("solene.com") && !envAdmin.includes("example.com")) {
@@ -38,37 +42,119 @@ interface SendClinicNotificationParams {
   submittedAt: string;
 }
 
+async function sendViaBrevo(
+  toEmail: string,
+  toName: string,
+  subject: string,
+  htmlContent: string
+) {
+  const brevoKey = getBrevoKey();
+  if (!brevoKey) return null;
+
+  try {
+    const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "api-key": brevoKey,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: {
+          name: "Solène Studio",
+          email: "grr2292005@gmail.com",
+        },
+        to: [
+          {
+            email: toEmail,
+            name: toName || toEmail,
+          },
+        ],
+        subject,
+        htmlContent,
+      }),
+    });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => null);
+      console.warn("[Brevo API Delivery Issue]", errData);
+      return {
+        success: false,
+        error: errData?.message || `Brevo delivery failed (${res.status})`,
+      };
+    }
+
+    const data = await res.json();
+    return { success: true, data };
+  } catch (err) {
+    console.error("[Brevo Exception]", err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Brevo error",
+    };
+  }
+}
+
 export async function sendCustomerConfirmationEmail(
   params: SendCustomerConfirmationParams
 ) {
-  const resend = getResendClient();
-  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
-
-  if (!resend) {
-    console.warn("Resend API Key is missing. Skipping customer confirmation email.");
-    return { success: false, error: "Resend API Key missing" };
-  }
-
   try {
     // Render full luxury React Email HTML template
     const html = await render(
       React.createElement(CustomerConfirmationEmail, params)
     );
 
-    // Send confirmation email strictly to the client's submitted email address
-    const data = await resend.emails.send({
-      from: fromEmail,
-      to: params.email,
-      subject: "Appointment Confirmed | Solène Aesthetic Medicine Studio",
-      html,
-    });
+    // 1. Try Brevo API (Allows sending to ANY customer email worldwide)
+    const brevoResult = await sendViaBrevo(
+      params.email,
+      params.fullName,
+      "Appointment Confirmed | Solène Aesthetic Medicine Studio",
+      html
+    );
 
-    if (data.error) {
-      console.error(`[Resend API Error] Customer Email to (${params.email}):`, data.error);
-      return { success: false, error: data.error.message };
+    if (brevoResult && brevoResult.success) {
+      console.log(`[Email Engine] Customer confirmation sent via Brevo to ${params.email}`);
+      return brevoResult;
     }
 
-    return { success: true, data };
+    // 2. Fallback to Resend API
+    const resend = getResendClient();
+    if (resend) {
+      const fromEmail = "Solène Studio <onboarding@resend.dev>";
+      let data = await resend.emails.send({
+        from: fromEmail,
+        to: params.email,
+        subject: "Appointment Confirmed | Solène Aesthetic Medicine Studio",
+        html,
+      });
+
+      if (
+        data.error &&
+        (data.error.name === "validation_error" ||
+          data.error.statusCode === 422 ||
+          data.error.statusCode === 403 ||
+          data.error.message?.includes("testing"))
+      ) {
+        const adminRecipient = getAdminRecipient();
+        data = await resend.emails.send({
+          from: fromEmail,
+          to: adminRecipient,
+          subject: `[Client Confirmation Copy for ${params.fullName}] Solène Studio`,
+          html,
+        });
+      }
+
+      if (data.error) {
+        return { success: false, error: data.error.message };
+      }
+
+      return { success: true, data };
+    }
+
+    return {
+      success: false,
+      error: brevoResult?.error || "No email provider available.",
+    };
   } catch (error) {
     console.error(`Failed to send customer confirmation email to (${params.email}):`, error);
     return {
@@ -81,14 +167,7 @@ export async function sendCustomerConfirmationEmail(
 export async function sendClinicNotificationEmail(
   params: SendClinicNotificationParams
 ) {
-  const resend = getResendClient();
-  const fromEmail = process.env.FROM_EMAIL || "Solène Studio <onboarding@resend.dev>";
   const adminRecipient = getAdminRecipient();
-
-  if (!resend) {
-    console.warn("Resend API Key is missing. Skipping clinic notification email.");
-    return { success: false, error: "Resend API Key missing" };
-  }
 
   try {
     // Render full staff alert React Email HTML template
@@ -96,19 +175,41 @@ export async function sendClinicNotificationEmail(
       React.createElement(ClinicNotificationEmail, params)
     );
 
-    const data = await resend.emails.send({
-      from: fromEmail,
-      to: adminRecipient,
-      subject: `New Booking Alert: ${params.fullName} - ${params.treatment}`,
-      html,
-    });
+    // 1. Try Brevo API
+    const brevoResult = await sendViaBrevo(
+      adminRecipient,
+      "Solène Concierge",
+      `New Booking Alert: ${params.fullName} - ${params.treatment}`,
+      html
+    );
 
-    if (data.error) {
-      console.error(`[Resend API Error] Clinic Notification Email to (${adminRecipient}):`, data.error);
-      return { success: false, error: data.error.message };
+    if (brevoResult && brevoResult.success) {
+      console.log(`[Email Engine] Clinic notification sent via Brevo to ${adminRecipient}`);
+      return brevoResult;
     }
 
-    return { success: true, data };
+    // 2. Fallback to Resend API
+    const resend = getResendClient();
+    if (resend) {
+      const fromEmail = "Solène Studio <onboarding@resend.dev>";
+      const data = await resend.emails.send({
+        from: fromEmail,
+        to: adminRecipient,
+        subject: `New Booking Alert: ${params.fullName} - ${params.treatment}`,
+        html,
+      });
+
+      if (data.error) {
+        return { success: false, error: data.error.message };
+      }
+
+      return { success: true, data };
+    }
+
+    return {
+      success: false,
+      error: brevoResult?.error || "No email provider available.",
+    };
   } catch (error) {
     console.error(`Failed to send clinic notification email to (${adminRecipient}):`, error);
     return {
