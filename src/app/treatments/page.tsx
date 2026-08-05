@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { FooterSection } from "@/components/sections/FooterSection";
@@ -13,41 +13,41 @@ import laserImg from "../../../public/assets/Laser and Light.png";
 import bodyImg from "../../../public/assets/Body and Wellness.png";
 import bedAreaImg from "../../../public/assets/Bed Area.png";
 
-export default function TreatmentsPage() {
-  const treatmentCategories = [
-    {
-      title: "Injectables & Sculpting",
-      slug: "/treatments/injectables",
-      subtitle: "Precision sculpting for natural, subtle facial balancing.",
-      image: injectablesImg,
-      details: ["Botulinum Toxins", "Hyaluronic Acid Dermal Fillers", "Sculptra Collagen Stimulators", "Subtle Lip Architecture"],
-    },
-    {
-      title: "Collagen & Texture",
-      slug: "/treatments/collagen",
-      subtitle: "Deep cellular renewal and dermal remodeling.",
-      image: facialsImg,
-      details: ["Morpheus8 RF Microneedling", "PRF Matrix Therapy", "Medical Micro-channeling", "Custom Scar Remodeling"],
-    },
-    {
-      title: "Laser & Photofacials",
-      slug: "/treatments/laser",
-      subtitle: "Targeted light therapies for pigment and vessel clarity.",
-      image: laserImg,
-      details: ["Lumecca IPL Photofacial", "Clear & Brilliant Resurfacing", "Vascular Laser Therapy", "Hyperpigmentation Eraser"],
-    },
-    {
-      title: "Medical Hydration & Skin Rehab",
-      slug: "/treatments/hydration",
-      subtitle: "Restorative clinical facials for radiant skin barrier health.",
-      image: bodyImg,
-      details: ["HydraFacial MD Platinum", "Medical Chemical Peels", "Exosome Glow Therapy", "Barrier Repair Protocol"],
-    },
-  ];
+const TREATMENT_CATEGORIES = [
+  {
+    title: "Injectables & Sculpting",
+    slug: "/treatments/injectables",
+    subtitle: "Precision sculpting for natural, subtle facial balancing.",
+    image: injectablesImg,
+    details: ["Botulinum Toxins", "Hyaluronic Acid Dermal Fillers", "Sculptra Collagen Stimulators", "Subtle Lip Architecture"],
+  },
+  {
+    title: "Collagen & Texture",
+    slug: "/treatments/collagen",
+    subtitle: "Deep cellular renewal and dermal remodeling.",
+    image: facialsImg,
+    details: ["Morpheus8 RF Microneedling", "PRF Matrix Therapy", "Medical Micro-channeling", "Custom Scar Remodeling"],
+  },
+  {
+    title: "Laser & Photofacials",
+    slug: "/treatments/laser",
+    subtitle: "Targeted light therapies for pigment and vessel clarity.",
+    image: laserImg,
+    details: ["Lumecca IPL Photofacial", "Clear & Brilliant Resurfacing", "Vascular Laser Therapy", "Hyperpigmentation Eraser"],
+  },
+  {
+    title: "Medical Hydration & Skin Rehab",
+    slug: "/treatments/hydration",
+    subtitle: "Restorative clinical facials for radiant skin barrier health.",
+    image: bodyImg,
+    details: ["HydraFacial MD Platinum", "Medical Chemical Peels", "Exosome Glow Therapy", "Barrier Repair Protocol"],
+  },
+] as const;
 
+export default function TreatmentsPage() {
   return (
     <main className="bg-[#FAF7F2] min-h-screen">
-      {/* Hero Banner - Matching Home & About Us Full-Height Viewport Style */}
+      {/* Hero Banner */}
       <section className="relative w-full h-[100svh] min-h-[720px] max-h-[1080px] bg-[#1F221B] flex flex-col justify-between overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <Image
@@ -69,10 +69,8 @@ export default function TreatmentsPage() {
           />
         </div>
 
-        {/* Top Header Navbar */}
         <Navbar />
 
-        {/* Hero Core Centered Content Container */}
         <div className="relative z-30 mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px] pt-[140px] pb-[80px] flex-1 flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -103,20 +101,21 @@ export default function TreatmentsPage() {
       {/* Treatment Categories Grid */}
       <section className="py-[80px] sm:py-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]" id="menu">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
-          {treatmentCategories.map((cat, idx) => (
+          {TREATMENT_CATEGORIES.map((cat, idx) => (
             <motion.div
-              key={idx}
+              key={cat.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-[#F5EFE6] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-[#E8DFD1]/60 shadow-sm flex flex-col justify-between group hover:shadow-md transition-all"
+              className="bg-[#F5EFE6] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-[#E8DFD1]/60 shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
             >
               <div className="relative h-[280px] w-full overflow-hidden">
                 <Image
                   src={cat.image}
                   alt={cat.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -132,9 +131,9 @@ export default function TreatmentsPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-2">
-                  {cat.details.map((detail, dIdx) => (
+                  {cat.details.map((detail) => (
                     <span
-                      key={dIdx}
+                      key={detail}
                       className="bg-white/80 border border-[#E8DFD1] text-[#1C1C1C] font-sans text-[13px] px-3.5 py-1.5 rounded-full"
                     >
                       {detail}

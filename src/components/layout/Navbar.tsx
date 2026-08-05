@@ -7,11 +7,11 @@ import { NavItem } from "./NavItem";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import logoSvg from "../../../public/assets/svg/ic_logo_1.svg";
 
+const LANGUAGES = ["EN", "FR", "DE"] as const;
+
 export const Navbar: React.FC = () => {
   const [lang, setLang] = useState("EN");
   const [langOpen, setLangOpen] = useState(false);
-
-  const languages = ["EN", "FR", "DE"];
 
   return (
     <header className="absolute top-0 left-0 right-0 z-50 w-full">
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
 
             {langOpen && (
               <div className="absolute right-0 top-full mt-2 bg-[#FAF7F2] rounded-[14px] p-2 shadow-xl border border-[#E8DFD1] min-w-[70px] flex flex-col gap-1 z-50">
-                {languages.map((l) => (
+                {LANGUAGES.map((l) => (
                   <button
                     key={l}
                     type="button"

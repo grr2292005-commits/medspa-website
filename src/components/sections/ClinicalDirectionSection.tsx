@@ -1,37 +1,37 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { DoctorCard } from "@/components/ui/DoctorCard";
 import drElenaImg from "../../../public/assets/Dr. Elena Vance.png";
 import drMarcusImg from "../../../public/assets/Dr. Marcus Sterling.png";
 import drMayaImg from "../../../public/assets/Dr. Maya Lin.png";
 
-export const ClinicalDirectionSection: React.FC = () => {
-  const doctors = [
-    {
-      name: "Dr. Elena Vance, MD",
-      role: "Founder and Lead Medical Director",
-      quote:
-        "Aesthetic care should honor your natural facial architecture, never alter it. Our goal is to make you look like the most rested version of yourself.",
-      image: drElenaImg,
-    },
-    {
-      name: "Dr. Marcus Sterling, MD",
-      role: "Laser & Cellular Rejuvenation Specialist",
-      quote:
-        "True skin transformation happens beneath the surface. We utilize precision laser technology to rebuild collagen and clarity without compromising skin integrity.",
-      image: drMarcusImg,
-    },
-    {
-      name: "Dr. Maya Lin, PA-C",
-      role: "Master Aesthetic Injector",
-      quote:
-        "Injectables should enhance your unique facial expression, not mask it. I specialize in subtle lip architecture and full-face balancing that looks completely effortless.",
-      image: drMayaImg,
-    },
-  ];
+const DOCTORS = [
+  {
+    name: "Dr. Elena Vance, MD",
+    role: "Founder and Lead Medical Director",
+    quote:
+      "Aesthetic care should honor your natural facial architecture, never alter it. Our goal is to make you look like the most rested version of yourself.",
+    image: drElenaImg,
+  },
+  {
+    name: "Dr. Marcus Sterling, MD",
+    role: "Laser & Cellular Rejuvenation Specialist",
+    quote:
+      "True skin transformation happens beneath the surface. We utilize precision laser technology to rebuild collagen and clarity without compromising skin integrity.",
+    image: drMarcusImg,
+  },
+  {
+    name: "Dr. Maya Lin, PA-C",
+    role: "Master Aesthetic Injector",
+    quote:
+      "Injectables should enhance your unique facial expression, not mask it. I specialize in subtle lip architecture and full-face balancing that looks completely effortless.",
+    image: drMayaImg,
+  },
+] as const;
 
+export const ClinicalDirectionSection: React.FC = () => {
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="team">
       <div className="mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px]">
@@ -57,9 +57,9 @@ export const ClinicalDirectionSection: React.FC = () => {
 
         {/* 3-Column Doctors Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {doctors.map((doc, idx) => (
+          {DOCTORS.map((doc, idx) => (
             <motion.div
-              key={idx}
+              key={doc.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}

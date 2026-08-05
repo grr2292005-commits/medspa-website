@@ -1,36 +1,36 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
+
+const PILLARS = [
+  {
+    number: "01",
+    title: "Conservative Precision",
+    description:
+      "Undetectable adjustments designed to honor your natural facial architecture, ensuring you look rested and refreshed, never over filled.",
+  },
+  {
+    number: "02",
+    title: "Doctor Led Care",
+    description:
+      "Every treatment plan is custom crafted and directly supervised or administered by board certified physicians specializing in aesthetic medicine.",
+  },
+  {
+    number: "03",
+    title: "Unhurried Sanctuary",
+    description:
+      "Generous 60 minute consultation slots ensure a serene environment with ample time to discuss your goals without feeling pressure sold.",
+  },
+  {
+    number: "04",
+    title: "Transparent Pricing",
+    description:
+      "Clear, detailed treatment outlines with zero hidden fees. You receive honest recommendations and know exact costs before any procedure begins.",
+  },
+] as const;
 
 export const CorePillarsSection: React.FC = () => {
-  const pillars = [
-    {
-      number: "01",
-      title: "Conservative Precision",
-      description:
-        "Undetectable adjustments designed to honor your natural facial architecture, ensuring you look rested and refreshed, never over filled.",
-    },
-    {
-      number: "02",
-      title: "Doctor Led Care",
-      description:
-        "Every treatment plan is custom crafted and directly supervised or administered by board certified physicians specializing in aesthetic medicine.",
-    },
-    {
-      number: "03",
-      title: "Unhurried Sanctuary",
-      description:
-        "Generous 60 minute consultation slots ensure a serene environment with ample time to discuss your goals without feeling pressure sold.",
-    },
-    {
-      number: "04",
-      title: "Transparent Pricing",
-      description:
-        "Clear, detailed treatment outlines with zero hidden fees. You receive honest recommendations and know exact costs before any procedure begins.",
-    },
-  ];
-
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="pillars">
       <div className="mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px]">
@@ -56,9 +56,9 @@ export const CorePillarsSection: React.FC = () => {
 
         {/* 4 Stacked Pillar Cards */}
         <div className="flex flex-col gap-4 sm:gap-5">
-          {pillars.map((pillar, idx) => (
+          {PILLARS.map((pillar, idx) => (
             <motion.div
-              key={idx}
+              key={pillar.number}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}

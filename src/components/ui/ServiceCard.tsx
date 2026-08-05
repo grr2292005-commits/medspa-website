@@ -55,7 +55,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
             aria-hidden="true"
           >
             <path
-              d="M4 12L12 4M12 4H5.33333M12 4V10.6667"
+              d="M4 12L12 4M12 4H5.33M12 4V10.67"
               stroke="currentColor"
               strokeWidth="1.6"
               strokeLinecap="round"

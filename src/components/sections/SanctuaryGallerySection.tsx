@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import bedAreaImg from "../../../public/assets/Bed Area.png";
 import teaLoungeImg from "../../../public/assets/Tea Lounge.png";
 import meetingAreaImg from "../../../public/assets/Meeting Area.png";

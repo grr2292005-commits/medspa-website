@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import injectablesImg from "../../../public/assets/Injectables.png";
 import facialsImg from "../../../public/assets/Facials and Skin.png";
@@ -10,34 +10,34 @@ import laserImg from "../../../public/assets/Laser and Light.png";
 import bodyImg from "../../../public/assets/Body and Wellness.png";
 import ourLogoSvg from "../../../public/assets/svg/ic_our_logo.svg";
 
-export const ServicesSection: React.FC = () => {
-  const services = [
-    {
-      title: "Injectables",
-      subtitle: "Precision sculpting for natural, subtle results",
-      image: injectablesImg,
-      href: "#injectables",
-    },
-    {
-      title: "Facials and Skin",
-      subtitle: "Deep medical hydration for cellular renewal",
-      image: facialsImg,
-      href: "#facials",
-    },
-    {
-      title: "Laser and Light",
-      subtitle: "Targeted light therapy for skin clarity",
-      image: laserImg,
-      href: "#laser",
-    },
-    {
-      title: "Body and Wellness",
-      subtitle: "Advanced body contouring and holistic wellness",
-      image: bodyImg,
-      href: "#body",
-    },
-  ];
+const SERVICES = [
+  {
+    title: "Injectables",
+    subtitle: "Precision sculpting for natural, subtle results",
+    image: injectablesImg,
+    href: "/treatments/injectables",
+  },
+  {
+    title: "Facials and Skin",
+    subtitle: "Deep medical hydration for cellular renewal",
+    image: facialsImg,
+    href: "/treatments/hydration",
+  },
+  {
+    title: "Laser and Light",
+    subtitle: "Targeted light therapy for skin clarity",
+    image: laserImg,
+    href: "/treatments/laser",
+  },
+  {
+    title: "Body and Wellness",
+    subtitle: "Advanced body contouring and holistic wellness",
+    image: bodyImg,
+    href: "/treatments/collagen",
+  },
+] as const;
 
+export const ServicesSection: React.FC = () => {
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="services">
       <div className="mx-auto w-full max-w-[1440px] px-[24px] sm:px-[40px]">
@@ -80,9 +80,9 @@ export const ServicesSection: React.FC = () => {
 
         {/* 4-Column Services Grid with Framer Motion Stagger */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {services.map((service, idx) => (
+          {SERVICES.map((service, idx) => (
             <motion.div
-              key={idx}
+              key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { TrustChecklist } from "@/components/ui/TrustChecklist";
@@ -33,6 +33,7 @@ export const HeroSection: React.FC = () => {
             src={ellipseLayerImg}
             alt="Golden Ambient Lighting"
             fill
+            sizes="100vw"
             className="object-cover object-center pointer-events-none"
             priority
           />

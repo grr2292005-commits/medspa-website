@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { FooterSection } from "@/components/sections/FooterSection";
@@ -24,8 +24,8 @@ export interface TreatmentCategoryTemplateProps {
   heroImage: StaticImageData | string;
   overviewHeading: string;
   overviewDescription: string;
-  treatmentsList: TreatmentItem[];
-  benefits: string[];
+  treatmentsList: readonly TreatmentItem[];
+  benefits: readonly string[];
 }
 
 export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps> = ({
@@ -119,8 +119,8 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
               Protocol Highlights
             </h3>
             <ul className="flex flex-col gap-3 pt-2">
-              {benefits.map((benefit, idx) => (
-                <li key={idx} className="flex items-center gap-3 font-sans text-[15px] text-[#1C1C1C]">
+              {benefits.map((benefit) => (
+                <li key={benefit} className="flex items-center gap-3 font-sans text-[15px] text-[#1C1C1C]">
                   <span className="w-5 h-5 rounded-full bg-[#3C4233] text-white text-[12px] flex items-center justify-center shrink-0">
                     ✓
                   </span>
@@ -149,7 +149,7 @@ export const TreatmentCategoryTemplate: React.FC<TreatmentCategoryTemplateProps>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {treatmentsList.map((item, idx) => (
             <motion.div
-              key={idx}
+              key={item.name}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

@@ -65,10 +65,11 @@ export const BookingForm: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {/* Full Name */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-full-name" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Full Name
               </label>
               <input
+                id="booking-full-name"
                 type="text"
                 required
                 placeholder="e.g. John Doe"
@@ -82,10 +83,11 @@ export const BookingForm: React.FC = () => {
 
             {/* Email Address */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-email" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Email Address
               </label>
               <input
+                id="booking-email"
                 type="email"
                 required
                 placeholder="youremail@example.com"
@@ -99,10 +101,11 @@ export const BookingForm: React.FC = () => {
 
             {/* Phone Number */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-phone" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Phone Number
               </label>
               <input
+                id="booking-phone"
                 type="tel"
                 required
                 placeholder="e.g. +49 1234 5678 90"
@@ -116,11 +119,12 @@ export const BookingForm: React.FC = () => {
 
             {/* Treatment Type */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-treatment" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Treatment Type
               </label>
               <div className="relative">
                 <select
+                  id="booking-treatment"
                   required
                   value={formData.treatment}
                   onChange={(e) =>
@@ -148,13 +152,14 @@ export const BookingForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Date Picker - Fixed double calendar icon issue */}
+            {/* Date Picker */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-date" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Date
               </label>
               <div className="relative">
                 <input
+                  id="booking-date"
                   type="date"
                   required
                   value={formData.date}
@@ -177,11 +182,12 @@ export const BookingForm: React.FC = () => {
 
             {/* Time Selector */}
             <div className="flex flex-col gap-2">
-              <label className="font-sans text-[14px] font-medium text-[#1C1C1C]">
+              <label htmlFor="booking-time" className="font-sans text-[14px] font-medium text-[#1C1C1C]">
                 Time
               </label>
               <div className="relative">
                 <select
+                  id="booking-time"
                   required
                   value={formData.time}
                   onChange={(e) =>

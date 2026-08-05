@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import aboutHeroImg from "../../../public/assets/A view.png";
 

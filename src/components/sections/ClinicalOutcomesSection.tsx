@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import acneImg from "../../../public/assets/Slider image with acne.png";
@@ -10,39 +10,39 @@ import clearImg from "../../../public/assets/Slider image with no acne.png";
 import leftDirectorSvg from "../../../public/assets/svg/ic_left_director.svg";
 import rightDirectorSvg from "../../../public/assets/svg/ic_right_director.svg";
 
-export const ClinicalOutcomesSection: React.FC = () => {
-  const testimonials = [
-    {
-      quote:
-        "“I was terrified of looking over done or frozen. Dr. Vance built a conservative plan for my skin texture that made me look completely refreshed, like I had just returned from a month-long vacation.”",
-      author: "Camile.L",
-      detail: "Verified Client (Morpheus8 Texture Protocol)",
-      rating: 5,
-    },
-    {
-      quote:
-        "“The subtlety is what impressed me most. My colleagues noticed I looked rested and glowing, but no one could guess I had anything done.”",
-      author: "Elena R.",
-      detail: "Verified Client (Cellular Hydration & Glow)",
-      rating: 5,
-    },
-  ];
+const TESTIMONIALS = [
+  {
+    quote:
+      "“I was terrified of looking over done or frozen. Dr. Vance built a conservative plan for my skin texture that made me look completely refreshed, like I had just returned from a month-long vacation.”",
+    author: "Camile.L",
+    detail: "Verified Client (Morpheus8 Texture Protocol)",
+    rating: 5,
+  },
+  {
+    quote:
+      "“The subtlety is what impressed me most. My colleagues noticed I looked rested and glowing, but no one could guess I had anything done.”",
+    author: "Elena R.",
+    detail: "Verified Client (Cellular Hydration & Glow)",
+    rating: 5,
+  },
+] as const;
 
+export const ClinicalOutcomesSection: React.FC = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const handlePrev = () => {
     setActiveTestimonial((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+      prev === 0 ? TESTIMONIALS.length - 1 : prev - 1
     );
   };
 
   const handleNext = () => {
     setActiveTestimonial((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+      prev === TESTIMONIALS.length - 1 ? 0 : prev + 1
     );
   };
 
-  const current = testimonials[activeTestimonial];
+  const current = TESTIMONIALS[activeTestimonial];
 
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="results">
@@ -95,7 +95,7 @@ export const ClinicalOutcomesSection: React.FC = () => {
               <div className="flex items-center gap-1">
                 {[...Array(current.rating)].map((_, i) => (
                   <svg
-                    key={i}
+                    key={`star-${i}`}
                     width="18"
                     height="18"
                     viewBox="0 0 20 20"
@@ -158,7 +158,7 @@ export const ClinicalOutcomesSection: React.FC = () => {
           {/* Right Column: Interactive Before & After Image Slider */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7 }}
             className="lg:col-span-6 w-full"

@@ -12,19 +12,19 @@ export interface NavItemProps {
   hasDropdown?: boolean;
 }
 
+const DROPDOWN_ITEMS = [
+  { label: "Injectables & Sculpting", href: "/treatments/injectables" },
+  { label: "Collagen & Texture", href: "/treatments/collagen" },
+  { label: "Laser & Photofacials", href: "/treatments/laser" },
+  { label: "Medical Hydration", href: "/treatments/hydration" },
+] as const;
+
 export const NavItem: React.FC<NavItemProps> = ({
   href,
   label,
   hasDropdown = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const dropdownItems = [
-    { label: "Injectables & Sculpting", href: "/treatments/injectables" },
-    { label: "Collagen & Texture", href: "/treatments/collagen" },
-    { label: "Laser & Photofacials", href: "/treatments/laser" },
-    { label: "Medical Hydration", href: "/treatments/hydration" },
-  ];
 
   if (!hasDropdown) {
     return (
@@ -67,18 +67,18 @@ export const NavItem: React.FC<NavItemProps> = ({
       {/* Floating Dropdown Menu */}
       <div
         className={cn(
-          "absolute top-full left-0 pt-3 z-50 transition-all duration-200 origin-top-left",
+          "absolute top-full left-0 pt-3 z-50 transition-[opacity,transform] duration-200 origin-top-left",
           isOpen
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-95 pointer-events-none"
         )}
       >
         <div className="bg-[#FAF7F2] rounded-[20px] p-5 shadow-2xl border border-[#E8DFD1] min-w-[240px] flex flex-col gap-3">
-          {dropdownItems.map((item, idx) => (
+          {DROPDOWN_ITEMS.map((item) => (
             <Link
-              key={idx}
+              key={item.href}
               href={item.href}
-              className="font-sans text-[15px] leading-[1.3] text-[#1C1C1C] hover:text-[#3C4233] hover:translate-x-1 transition-all duration-150 py-1"
+              className="font-sans text-[15px] leading-[1.3] text-[#1C1C1C] hover:text-[#3C4233] hover:translate-x-1 transition-[color,transform] duration-150 py-1"
             >
               {item.label}
             </Link>

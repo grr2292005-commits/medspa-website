@@ -245,6 +245,7 @@ export const FooterSection: React.FC = () => {
                 <input
                   type="email"
                   required
+                  aria-label="Email address"
                   placeholder="Email address"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}

@@ -2,30 +2,30 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import soleneDifferenceImg from "../../../public/assets/Solene Difference.png";
 import logoSvg from "../../../public/assets/svg/ic_logo_1.svg";
 
+const POINTS = [
+  {
+    title: "Board Certified Care:",
+    description:
+      "Every treatment is administered or directly supervised by licensed medical doctors.",
+  },
+  {
+    title: "Conservative Enhancement:",
+    description:
+      "We specialize in subtle, undetectable adjustments that keep you looking like yourself.",
+  },
+  {
+    title: "Transparent Consultation:",
+    description:
+      "No unexpected fees or aggressive upsells. Every visit begins with upfront pricing.",
+  },
+] as const;
+
 export const AboutSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const points = [
-    {
-      title: "Board Certified Care:",
-      description:
-        "Every treatment is administered or directly supervised by licensed medical doctors.",
-    },
-    {
-      title: "Conservative Enhancement:",
-      description:
-        "We specialize in subtle, undetectable adjustments that keep you looking like yourself.",
-    },
-    {
-      title: "Transparent Consultation:",
-      description:
-        "No unexpected fees or aggressive upsells. Every visit begins with upfront pricing.",
-    },
-  ];
 
   return (
     <section className="w-full bg-[#FAF7F2] py-[80px] sm:py-[100px] lg:py-[120px]" id="about">
@@ -47,7 +47,7 @@ export const AboutSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* Showcase Container Card (Split 2-Column Layout) */}
+        {/* Showcase Container Card */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,19 +97,19 @@ export const AboutSection: React.FC = () => {
                 like environment.
               </p>
 
-              {/* Interactive Points Stack with Pushing Hover Animation & Sliding Indicator Line */}
+              {/* Interactive Points Stack */}
               <div className="relative flex flex-col gap-5 pt-4">
-                {points.map((point, idx) => {
+                {POINTS.map((point, idx) => {
                   const isActive = activeIndex === idx;
                   return (
                     <div
-                      key={idx}
+                      key={point.title}
                       onMouseEnter={() => setActiveIndex(idx)}
-                      className="group cursor-pointer relative pl-5 transition-all duration-300"
+                      className="group cursor-pointer relative pl-5 transition-[transform,color] duration-300"
                     >
                       {/* Sliding Left Border Line Indicator */}
                       <span
-                        className={`absolute left-0 top-0 bottom-0 w-[2.5px] rounded-full bg-[#1C1C1C] transition-all duration-300 ease-out ${
+                        className={`absolute left-0 top-0 bottom-0 w-[2.5px] rounded-full bg-[#1C1C1C] transition-[opacity,transform] duration-300 ease-out ${
                           isActive
                             ? "opacity-100 scale-y-100"
                             : "opacity-0 scale-y-50"
@@ -118,7 +118,7 @@ export const AboutSection: React.FC = () => {
 
                       {/* Text pushing/sliding right on hover */}
                       <div
-                        className={`transition-all duration-300 ease-out ${
+                        className={`transition-[transform,color] duration-300 ease-out ${
                           isActive
                             ? "translate-x-1 text-[#1C1C1C]"
                             : "text-[#4A4630]/60 group-hover:text-[#4A4630] group-hover:translate-x-1"

@@ -57,7 +57,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
-      window.addEventListener("touchmove", handleTouchMove);
+      window.addEventListener("touchmove", handleTouchMove, { passive: true });
       window.addEventListener("touchend", handleMouseUp);
     }
     return () => {
@@ -71,6 +71,8 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
   return (
     <div
       ref={containerRef}
+      role="region"
+      aria-label="Before and after image comparison slider"
       className={cn(
         "relative w-full h-[480px] sm:h-[560px] lg:h-[620px] rounded-[24px] sm:rounded-[32px] overflow-hidden select-none cursor-ew-resize shadow-md",
         className
@@ -99,7 +101,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         </span>
       </div>
 
-      {/* Before Image (Clipped via CSS clip-path - immune to ref/initial render squish bugs) */}
+      {/* Before Image */}
       <div
         className="absolute inset-0 w-full h-full z-10 pointer-events-none"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
@@ -133,7 +135,6 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
             className="w-[18px] h-[12px] text-[#1C1C1C]"
             aria-hidden="true"
           >
-            {/* Left Chevron */}
             <path
               d="M5 1L1 6L5 11"
               stroke="currentColor"
@@ -141,7 +142,6 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            {/* Right Chevron */}
             <path
               d="M13 1L17 6L13 11"
               stroke="currentColor"
@@ -161,7 +161,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         value={sliderPosition}
         onChange={(e) => setSliderPosition(Number(e.target.value))}
         className="sr-only"
-        aria-label="Image comparison slider"
+        aria-label="Image comparison slider control"
       />
     </div>
   );

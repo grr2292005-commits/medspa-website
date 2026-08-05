@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import drElenaImg from "../../../public/assets/Dr. Elena Vance.png";
 
 export const OriginStorySection: React.FC = () => {

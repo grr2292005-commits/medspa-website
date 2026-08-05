@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import logoSvg from "../../../public/assets/svg/ic_logo_1.svg";
 
@@ -43,10 +43,10 @@ export const PageLoader: React.FC = () => {
           {/* Loading bar */}
           <div className="w-[120px] h-[2px] bg-white/15 rounded-full overflow-hidden">
             <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
               transition={{ duration: 1.4, delay: 0.3, ease: "easeInOut" }}
-              className="h-full bg-[#EFE3D8] rounded-full"
+              className="h-full w-full bg-[#EFE3D8] rounded-full origin-left"
             />
           </div>
         </motion.div>

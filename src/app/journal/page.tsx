@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { FooterSection } from "@/components/sections/FooterSection";
@@ -26,62 +26,62 @@ interface Article {
   image: StaticImageData;
 }
 
+const ARTICLES: Article[] = [
+  {
+    id: 1,
+    title: "The Architecture of Natural Facial Rejuvenation: Why Micro-Dosing Wins",
+    category: "Aesthetic Science",
+    readTime: "6 Min Read",
+    author: "Dr. Elena Vance, MD",
+    authorImg: drElenaImg,
+    date: "August 2026",
+    excerpt:
+      "Understanding dynamic muscle vector forces and why conservative micro-dosing delivers longer lasting, more natural youthfulness than aggressive volume fill.",
+    content: [
+      "In modern aesthetic medicine, the goal has evolved from sheer volume replacement to delicate architectural harmonization. When we inject neuromodulators or dermal fillers, we must respect the dynamic muscular vectors that define your natural facial expression.",
+      "Micro-dosing involves applying precise, diluted micro-quantities of neuromodulators at strategic dermal insertion points. This relaxes superficial muscle fibers that cause dynamic forehead and peri-orbital etching without impairing deeper motor function.",
+      "The result is a face that moves naturally, reflects light evenly, and looks completely rested—never frozen or overfilled."
+    ],
+    image: facialsImg,
+  },
+  {
+    id: 2,
+    title: "Morpheus8 vs Traditional Microneedling: The Cellular Breakdown",
+    category: "Dermal Remodeling",
+    readTime: "8 Min Read",
+    author: "Dr. Marcus Sterling, MD",
+    authorImg: drMarcusImg,
+    date: "July 2026",
+    excerpt:
+      "A deep dive into fractional radiofrequency thermal zones, subdermal tissue contraction, and rebuilding type-I collagen fibers safely.",
+    content: [
+      "While mechanical microneedling creates micro-channels to trigger superficial epidermal renewal, Morpheus8 combines gold-plated insulated microneedles with sub-dermal radiofrequency energy.",
+      "By delivering RF energy at depths up to 4mm, Morpheus8 heats the fibroseptal network in the subdermal fat layer. This induces collagen contraction and triggers neo-collagenesis over 3 to 6 months.",
+      "Clinical trials show a 40% increase in dermal collagen density post 3 sessions, making it the gold standard for jawline tightening and pore refining without surgical intervention."
+    ],
+    image: laserImg,
+  },
+  {
+    id: 3,
+    title: "Protecting Dermal Barrier Integrity During Laser & Photofacial Therapy",
+    category: "Skin Longevity",
+    readTime: "5 Min Read",
+    author: "Dr. Maya Lin, PA-C",
+    authorImg: drElenaImg,
+    date: "July 2026",
+    excerpt:
+      "How ceramide barrier repair protocols combined with low-fluence optical wavelengths prevent post-inflammatory hyperpigmentation.",
+    content: [
+      "Photofacials and intense pulsed light (IPL) therapies are remarkably effective at destroying sun spots and broken capillaries. However, thermal energy can temporarily disrupt the skin's protective lipid barrier.",
+      "Pre-treating the stratum corneum with biomimetic ceramides and bio-fermented lipids fortifies intercellular cement prior to optical exposure. This drastically reduces transepidermal water loss (TEWL) post-procedure.",
+      "Pairing high-peak IPL with immediate exosome nanoparticle cooling calms inflammatory cytokines, ensuring rapid 24-hour skin barrier recovery."
+    ],
+    image: heroImg,
+  },
+];
+
 export default function JournalPage() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-
-  const articles: Article[] = [
-    {
-      id: 1,
-      title: "The Architecture of Natural Facial Rejuvenation: Why Micro-Dosing Wins",
-      category: "Aesthetic Science",
-      readTime: "6 Min Read",
-      author: "Dr. Elena Vance, MD",
-      authorImg: drElenaImg,
-      date: "August 2026",
-      excerpt:
-        "Understanding dynamic muscle vector forces and why conservative micro-dosing delivers longer lasting, more natural youthfulness than aggressive volume fill.",
-      content: [
-        "In modern aesthetic medicine, the goal has evolved from sheer volume replacement to delicate architectural harmonization. When we inject neuromodulators or dermal fillers, we must respect the dynamic muscular vectors that define your natural facial expression.",
-        "Micro-dosing involves applying precise, diluted micro-quantities of neuromodulators at strategic dermal insertion points. This relaxes superficial muscle fibers that cause dynamic forehead and peri-orbital etching without impairing deeper motor function.",
-        "The result is a face that moves naturally, reflects light evenly, and looks completely rested—never frozen or overfilled."
-      ],
-      image: facialsImg,
-    },
-    {
-      id: 2,
-      title: "Morpheus8 vs Traditional Microneedling: The Cellular Breakdown",
-      category: "Dermal Remodeling",
-      readTime: "8 Min Read",
-      author: "Dr. Marcus Sterling, MD",
-      authorImg: drMarcusImg,
-      date: "July 2026",
-      excerpt:
-        "A deep dive into fractional radiofrequency thermal zones, subdermal tissue contraction, and rebuilding type-I collagen fibers safely.",
-      content: [
-        "While mechanical microneedling creates micro-channels to trigger superficial epidermal renewal, Morpheus8 combines gold-plated insulated microneedles with sub-dermal radiofrequency energy.",
-        "By delivering RF energy at depths up to 4mm, Morpheus8 heats the fibroseptal network in the subdermal fat layer. This induces collagen contraction and triggers neo-collagenesis over 3 to 6 months.",
-        "Clinical trials show a 40% increase in dermal collagen density post 3 sessions, making it the gold standard for jawline tightening and pore refining without surgical intervention."
-      ],
-      image: laserImg,
-    },
-    {
-      id: 3,
-      title: "Protecting Dermal Barrier Integrity During Laser & Photofacial Therapy",
-      category: "Skin Longevity",
-      readTime: "5 Min Read",
-      author: "Dr. Maya Lin, PA-C",
-      authorImg: drElenaImg,
-      date: "July 2026",
-      excerpt:
-        "How ceramide barrier repair protocols combined with low-fluence optical wavelengths prevent post-inflammatory hyperpigmentation.",
-      content: [
-        "Photofacials and intense pulsed light (IPL) therapies are remarkably effective at destroying sun spots and broken capillaries. However, thermal energy can temporarily disrupt the skin's protective lipid barrier.",
-        "Pre-treating the stratum corneum with biomimetic ceramides and bio-fermented lipids fortifies intercellular cement prior to optical exposure. This drastically reduces transepidermal water loss (TEWL) post-procedure.",
-        "Pairing high-peak IPL with immediate exosome nanoparticle cooling calms inflammatory cytokines, ensuring rapid 24-hour skin barrier recovery."
-      ],
-      image: heroImg,
-    },
-  ];
 
   return (
     <main className="bg-[#FAF7F2] min-h-screen">
@@ -133,21 +133,30 @@ export default function JournalPage() {
       {/* Articles Grid */}
       <section className="py-[80px] sm:py-[100px] max-w-[1440px] mx-auto px-[24px] sm:px-[40px]" id="articles">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {articles.map((article) => (
+          {ARTICLES.map((article) => (
             <motion.article
               key={article.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: article.id * 0.1 }}
+              role="button"
+              tabIndex={0}
               onClick={() => setSelectedArticle(article)}
-              className="bg-white rounded-[28px] overflow-hidden shadow-sm border border-[#E8DFD1]/60 flex flex-col justify-between group hover:shadow-md transition-all cursor-pointer"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedArticle(article);
+                }
+              }}
+              className="bg-white rounded-[28px] overflow-hidden shadow-sm border border-[#E8DFD1]/60 flex flex-col justify-between group hover:shadow-md transition-shadow cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3C4233]"
             >
               <div className="relative h-[240px] w-full overflow-hidden">
                 <Image
                   src={article.image}
                   alt={article.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#1C1C1C] font-sans text-[12px] font-semibold px-3.5 py-1.5 rounded-full">
@@ -176,6 +185,7 @@ export default function JournalPage() {
                         src={article.authorImg}
                         alt={article.author}
                         fill
+                        sizes="32px"
                         className="object-cover"
                       />
                     </div>
@@ -227,6 +237,7 @@ export default function JournalPage() {
                       src={selectedArticle.authorImg}
                       alt={selectedArticle.author}
                       fill
+                      sizes="40px"
                       className="object-cover"
                     />
                   </div>
@@ -245,6 +256,7 @@ export default function JournalPage() {
                     src={selectedArticle.image}
                     alt={selectedArticle.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 700px"
                     className="object-cover"
                   />
                 </div>
